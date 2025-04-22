@@ -1,5 +1,5 @@
 # Studio 16
-
+Kelenna Eke-Okoro, Henry Anyimadu, Jonah Sachs
 # 2a. Use a class with all pure virtual functions (functions with = 0), like virtual int write(...) = 0;
 # 3a. This is interface inheritance since TextFile implements abstract functions from AbstractFile.
 # 3b. private
