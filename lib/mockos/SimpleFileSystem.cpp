@@ -2,6 +2,7 @@
  * Studios 16-21: SimpleFileSystem.cpp
  **/
 #include "./mockos/SimpleFileSystem.h"
+#include "./mockos/AbstractFileSystem.h"
 #include <string>
 
 #include "mockos/ImageFile.h"
@@ -9,13 +10,22 @@
 
 using namespace std;
 
+
 SimpleFileSystem::SimpleFileSystem() {
 }
 
-int SimpleFileSystem::addFile(std::string filename, AbstractFile *) {
+int SimpleFileSystem::addFile(string filename, AbstractFile *ptr) {
+    if (ptr == nullptr) {
+        return null_file_pointer;
+    }
 
+    if (files.count(filename) > 0) {
+        return file_already_exists;
+    }
+
+    files.emplace(filename, ptr);
+    return success;
 }
-
 
 int SimpleFileSystem::createFile(std::string filename) {
     //check to see if the file already exists
@@ -49,3 +59,10 @@ int SimpleFileSystem::createFile(std::string filename) {
         return unknown_extension;
     }
 }
+
+AbstractFile *SimpleFileSystem::openFile(string filename) {
+    // if !(files[filename]) {
+    // return nullptr;
+    // }
+    if (files.count(filename) > 0) {
+        return files[filename];
