@@ -5,6 +5,7 @@
 
 #include "mockos/AbstractFile.h"
 #include "mockos/ImageFile.h"
+#include "mockos/TextFile.h"
 
 #include <iostream>
 
@@ -20,7 +21,7 @@ std::vector<char> toVec(const std::string& s) {
 int main(int argc, char* argv[]) {
 
     //write an example image
-    std::unique_ptr<AbstractFile> file = std::make_unique<ImageFile>("ImageFile");
+    std::unique_ptr<AbstractFile> file = std::make_unique<ImageFile>("ImageFile.img");
 
 
     //form a good input
@@ -89,13 +90,45 @@ int main(int argc, char* argv[]) {
     //create a normal abstract pointer
     int result_abs = sys.addFile(file->getName(), file.release());
     if (result_abs!= success) {
-        std::cerr << "addFile failed: " << result_abs << '\n';
+        std::cerr << "addFile1 failed: " << result_abs << '\n';
         return result_abs;
     }
-    cout << "File Added" << endl;
+    cout << "File Added1" << endl;
+
+    std::unique_ptr<AbstractFile> tfile = std::make_unique<TextFile>("notes.txt");
+    int result_abs2 = sys.addFile(tfile->getName(),tfile.release());
+
+    if (result_abs2!= success) {
+        std::cerr << "addFile2 failed: " << result_abs << '\n';
+        return result_abs;
+    }
+    cout << "File Added2" << endl;
 
 
+    //testing open
+    AbstractFile* h1 = sys.openFile("notes.txt");          // should succeed
+    cout << "openFile 1  → " << (h1 ? "OK" : "nullptr") << '\n';
+    AbstractFile* h2 = sys.openFile("ImageFile.img");
+    cout << "openFile 2  → " << (h2 ? "OK" : "nullptr") << '\n';
 
+
+    //testing close
+    int c1 = sys.closeFile(h1);
+    cout << "closeFile 1 → " << c1 << " (expected " << success << ")\n";
+    int c2 = sys.closeFile(h2);
+    cout << "closeFile 2 → " << c2 << " (expected " << success << ")\n";
+
+    //try creating a file
+    int create1 = sys.createFile("create.txt");
+    cout << "Create File: " << create1  << endl;
+
+    //delete all three files
+    int d1 = sys.deleteFile("create.txt");
+    cout << "Delete File1: " << d1 << endl;
+    int d2 = sys.deleteFile("notes.txt");
+    cout << "Delete File2: " << d2 << endl;
+    int d3 = sys.deleteFile("ImageFile.img");
+    cout << "Delete File3: " << d3 << endl;
 
     return success;
 }
