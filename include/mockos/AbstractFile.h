@@ -13,7 +13,7 @@ enum ErrorTypes {
 
 class AbstractFile {
 public:
-    AbstractFile();
+    AbstractFile() = default;
     virtual ~AbstractFile()=0;
     virtual void read()=0;
     virtual int write(std::vector<char> input)=0;

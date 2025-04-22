@@ -44,6 +44,11 @@ void TextFile::read() {
     cout << endl;
 }
 
+TextFile::~TextFile() {
+
+}
+
+
 
 
 
