@@ -60,9 +60,21 @@ int SimpleFileSystem::createFile(std::string filename) {
     }
 }
 
-// AbstractFile *SimpleFileSystem::openFile(string filename) {
-//     // if !(files[filename]) {
-//     // return nullptr;
-//     // }
-//     if (files.count(filename) > 0) {
-//         return files[filename];
+AbstractFile *SimpleFileSystem::openFile(string filename) {
+    // Check if file exists
+    auto iterator = files.find(filename);
+
+    if (iterator == files.end()) {
+        return nullptr;
+    }
+
+    AbstractFile* filePtr = iterator->second.get();
+
+    if (openFiles.count(filename) > 0) {
+        return nullptr;
+    }
+
+    openFiles.insert(filename);
+    return filePtr;
+}
+
