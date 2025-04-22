@@ -8,6 +8,10 @@
 
 #include <iostream>
 
+#include "mockos/SimpleFileSystem.h"
+
+
+using namespace std;
 
 std::vector<char> toVec(const std::string& s) {
     return {s.begin(), s.end()};
@@ -75,6 +79,22 @@ int main(int argc, char* argv[]) {
     int write_result6 = file ->append(good3x3);
     file -> read();
     std::cout << "Write 6 Results: " << write_result6 << std::endl;
+
+
+
+    //now lets start testing out the simple file system
+    SimpleFileSystem sys = SimpleFileSystem();
+    //add the Image file to the system
+
+    //create a normal abstract pointer
+    int result_abs = sys.addFile(file->getName(), file.release());
+    if (result_abs!= success) {
+        std::cerr << "addFile failed: " << result_abs << '\n';
+        return result_abs;
+    }
+    cout << "File Added" << endl;
+
+
 
 
     return success;

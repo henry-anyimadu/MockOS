@@ -17,16 +17,19 @@ enum ErrorTypes {
     allocation_error,
     file_already_exists,
     null_file_pointer,
+    no_file_error,
+    open_file_error
 };
 
 
 class AbstractFile {
 public:
     AbstractFile() = default;
-    virtual ~AbstractFile()=0;
+    virtual ~AbstractFile()=default;
     virtual void read()=0;
     virtual int write(std::vector<char> input)=0;
     virtual int append(std::vector<char> input)=0;
     virtual unsigned int getSize()=0;
     virtual std::string getName()=0;
+
 };

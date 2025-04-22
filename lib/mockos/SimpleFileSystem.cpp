@@ -1,93 +1,83 @@
-/**
- * Studios 16-21: SimpleFileSystem.cpp
- **/
-#include "./mockos/SimpleFileSystem.h"
-#include "./mockos/AbstractFileSystem.h"
-#include <string>
-
-#include "mockos/ImageFile.h"
+// SimpleFileSystem.cpp
+#include "mockos/SimpleFileSystem.h"
 #include "mockos/TextFile.h"
+#include "mockos/ImageFile.h"
 
-using namespace std;
+using std::string;
 
 
-SimpleFileSystem::SimpleFileSystem() {
+SimpleFileSystem::SimpleFileSystem() = default;
+
+SimpleFileSystem::~SimpleFileSystem() {
+    for (auto& [name, ptr] : files) delete ptr;
+    files.clear();
 }
 
-int SimpleFileSystem::addFile(string filename, AbstractFile *ptr) {
-    if (ptr == nullptr) {
+int SimpleFileSystem::addFile(string filename, AbstractFile* ptr)
+{
+    if (!ptr)
         return null_file_pointer;
-    }
-
-    if (files.count(filename) > 0) {
+    if (files.count(filename))
         return file_already_exists;
-    }
 
-    files.emplace(filename, ptr);
+    files.emplace(std::move(filename), ptr);
     return success;
 }
 
-int SimpleFileSystem::createFile(std::string filename) {
-    //check to see if the file already exists
-    for (string s : openFiles) {
-        if (s == filename) {
-            return duplicate_files;
-        }
-    }
-    //decide what file to create based upon the file extension
-    const std::size_t pos = filename.find_last_of('.');
-    string ext = filename.substr(pos + 1);
-    std::unique_ptr<AbstractFile> newFile;
 
-    if (ext == "img") {
-        //dynamically allocate an image file and add it to the files
-        newFile = std::make_unique<ImageFile>(filename);
-        if (addFile(std::move(filename), std::move(newFile).get())) {
-            return success;
-        }
-        return allocation_error;
-    }
-    else if (ext == "txt") {
-        //dynamically allocate an text file and add it to the files
-        newFile = std::make_unique<TextFile>(filename);
-        if (addFile(std::move(filename), std::move(newFile).get())) {
-            return success;
-        }
-        return allocation_error;
-    }
-    else {
+int SimpleFileSystem::createFile(string filename)
+{
+    if (files.count(filename))
+        return duplicate_files;
+
+    const std::size_t dot = filename.find_last_of('.');
+    if (dot == string::npos || dot + 1 == filename.size())
         return unknown_extension;
-    }
+
+    const string ext = filename.substr(dot + 1);
+
+    AbstractFile* pf = nullptr;
+    if (ext == "txt")      pf = new TextFile(filename);
+    else if (ext == "img") pf = new ImageFile(filename);
+    else                   return unknown_extension;
+
+    return addFile(std::move(filename), pf);   // ownership pass  map
 }
 
-AbstractFile *SimpleFileSystem::openFile(string filename) {
-    // Check if file exists
-    auto iterator = files.find(filename);
-
-    // If it doesnt exist, return nullptr
-    if (iterator == files.end()) {
-        return nullptr;
-    }
-
-    AbstractFile* filePtr = iterator->second.get();
-
-
-    if (openFiles.count(filename) > 0) {
-        return nullptr;
-    }
+AbstractFile* SimpleFileSystem::openFile(string filename)
+{
+    auto it = files.find(filename);
+    if (it == files.end())           return nullptr;          // no such file
+    if (openFiles.count(filename))   return nullptr;          // already open
 
     openFiles.insert(filename);
-    return filePtr;
+    return it->second;
 }
 
-int SimpleFileSystem::closeFile(AbstractFile *filePtr) {
-    // Check if the filePtr exists
+int SimpleFileSystem::closeFile(AbstractFile* ptr)
+{
+    if (!ptr) return null_file_pointer;
 
-    if (openFiles.count(filePtr->getName()) > 0) {
-        // Erase the pointer
-        openFiles.erase(filePtr->getName());
+    const string& name = ptr->getName();
+    auto it = openFiles.find(name);
+    if (it == openFiles.end())       return open_file_error;
 
-        return success;
-    } else return null_file_pointer;
+    openFiles.erase(it);
+    return success;
 }
 
+int SimpleFileSystem::deleteFile(string filename)
+{
+    // 1. does it exist?
+    auto it = files.find(filename);
+    if (it == files.end()) return no_file_error;
+
+    // 2. is it open?
+    if (openFiles.count(filename)) return open_file_error;
+
+    // 3. safe to delete
+    delete it->second;
+    files.erase(it);
+
+    return success;
+}
