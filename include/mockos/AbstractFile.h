@@ -12,6 +12,8 @@ enum ErrorTypes {
     size_mismatch,
     pixel_error,
     append_error,
+    file_already_exists,
+    null_file_pointer,
 };
 
 
