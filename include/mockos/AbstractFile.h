@@ -7,7 +7,11 @@
 
 enum ErrorTypes {
     success,
-    write_error,
+    empty_error,
+    no_digit_error,
+    size_mismatch,
+    pixel_error,
+    append_error,
 };
 
 

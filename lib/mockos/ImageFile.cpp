@@ -29,11 +29,12 @@ std::string ImageFile::getName() {
 
 // Writes data to the image file
 int ImageFile::write(std::vector<char> input) {
+    unsigned int empty = 0;
     if (input.empty()) {
         // Handle empty input if necessary, maybe return an error or do nothing
         contents.clear();
-        size = 0;
-        return 1; // Return a non-zero error code for empty input
+        size = empty;
+        return empty_error; // Return a non-zero error code for empty input
     }
 
     // Extract the last character as the dimension character
@@ -42,8 +43,8 @@ int ImageFile::write(std::vector<char> input) {
     // Check if the last character is a digit
     if (!isdigit(sizeChar)) {
          contents.clear();
-         size = 0;
-         return 2; // Error: size character is not a digit
+         size = empty;
+         return no_digit_error; // Error: size character is not a digit
     }
 
     // Convert the size character to an integer dimension 'n'
@@ -55,8 +56,8 @@ int ImageFile::write(std::vector<char> input) {
     if (input.size() != expectedSize) {
         // Size mismatch error
         contents.clear(); // Clear existing contents
-        size = 0;         // Reset size dimension
-        return 3; // Return a unique non-zero error code for size mismatch
+        size = empty;         // Reset size dimension
+        return size_mismatch; // Return a unique non-zero error code for size mismatch
     }
 
     // Validate pixel data (first n*n characters)
@@ -64,8 +65,8 @@ int ImageFile::write(std::vector<char> input) {
         if (input[i] != 'X' && input[i] != ' ') {
             // Invalid pixel error
             contents.clear(); // Clear existing contents
-            size = 0;         // Reset size dimension
-            return 4; // Return a unique non-zero error code for invalid pixel
+            size = empty;         // Reset size dimension
+            return pixel_error; // Return a unique non-zero error code for invalid pixel
         }
     }
 
@@ -73,18 +74,19 @@ int ImageFile::write(std::vector<char> input) {
     size = n; // Store the dimension 'n'
     contents.assign(input.begin(), input.end() - 1); // Copy pixel data (excluding the last size char)
 
-    return 0; // Return 0 for success
+    return success; // Return 0 for success
 }
 
 // Appending is not supported for ImageFile as per common image file formats
 int ImageFile::append(std::vector<char> input) {
     // Return a non-zero error code indicating append is not supported
-    return 5; // Unique error code for unsupported operation
+    return append_error; // Unique error code for unsupported operation
 }
 
 // Prints the image data to the console (formatted)
 void ImageFile::read() {
-     if (size == 0) {
+    unsigned int empty = 0;
+     if (size == empty) {
         return; // Nothing to print if size is 0
     }
     for (unsigned int y = 0; y < size; ++y) {

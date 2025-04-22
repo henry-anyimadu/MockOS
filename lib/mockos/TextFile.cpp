@@ -24,7 +24,7 @@ std::string TextFile::getName() {
 int TextFile::write(std::vector<char> in) {
     contents = in;
     if (in.empty()) {
-        return write_error;
+        return empty_error;
     }
     //then we have copied correctly
     return success;
