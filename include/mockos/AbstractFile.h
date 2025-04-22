@@ -12,6 +12,9 @@ enum ErrorTypes {
     size_mismatch,
     pixel_error,
     append_error,
+    duplicate_files,
+    unknown_extension,
+    allocation_error,
 };
 
 

@@ -14,7 +14,7 @@ class SimpleFileSystem: AbstractFileSystem {
  SimpleFileSystem();
  ~SimpleFileSystem();
 
- std::map<std::string, AbstractFile*> files;
+ std::map<std::string, std::unique_ptr<AbstractFile>> files;
  std::set<std::string> openFiles;
 
  int addFile(std::string filename, AbstractFile *) override;

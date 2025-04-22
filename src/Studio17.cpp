@@ -77,7 +77,5 @@ int main(int argc, char* argv[]) {
     std::cout << "Write 6 Results: " << write_result6 << std::endl;
 
 
-
-
-    return 0;
+    return success;
 }
