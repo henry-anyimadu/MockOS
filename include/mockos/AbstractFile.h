@@ -17,11 +17,6 @@ enum ErrorTypes {
     allocation_error,
     file_already_exists,
     null_file_pointer,
-    duplicate_files,
-    unknown_extension,
-    allocation_error,
-    file_already_exists,
-    null_file_pointer,
 };
 
 

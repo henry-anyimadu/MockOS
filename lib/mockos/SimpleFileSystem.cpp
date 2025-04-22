@@ -60,9 +60,9 @@ int SimpleFileSystem::createFile(std::string filename) {
     }
 }
 
-AbstractFile *SimpleFileSystem::openFile(string filename) {
-    // if !(files[filename]) {
-    // return nullptr;
-    // }
-    if (files.count(filename) > 0) {
-        return files[filename];
+// AbstractFile *SimpleFileSystem::openFile(string filename) {
+//     // if !(files[filename]) {
+//     // return nullptr;
+//     // }
+//     if (files.count(filename) > 0) {
+//         return files[filename];
