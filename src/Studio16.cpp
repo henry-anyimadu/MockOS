@@ -33,7 +33,7 @@ int main(int argc, char* argv[]) {
 
 
 
-    //now create a file type from the abstract class (not just a Textfile)
+    //now create a file type from the abstract class
     std::unique_ptr<AbstractFile> file = std::make_unique<TextFile>("Textfile");
     const string literal2 = "Testing the Polymorphism!\n";
     const vector<char> data3(literal2.begin(), literal2.end());
