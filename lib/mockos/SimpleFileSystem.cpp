@@ -64,11 +64,13 @@ AbstractFile *SimpleFileSystem::openFile(string filename) {
     // Check if file exists
     auto iterator = files.find(filename);
 
+    // If it doesnt exist, return nullptr
     if (iterator == files.end()) {
         return nullptr;
     }
 
     AbstractFile* filePtr = iterator->second.get();
+
 
     if (openFiles.count(filename) > 0) {
         return nullptr;
@@ -76,5 +78,16 @@ AbstractFile *SimpleFileSystem::openFile(string filename) {
 
     openFiles.insert(filename);
     return filePtr;
+}
+
+int SimpleFileSystem::closeFile(AbstractFile *filePtr) {
+    // Check if the filePtr exists
+
+    if (openFiles.count(filePtr->getName()) > 0) {
+        // Erase the pointer
+        openFiles.erase(filePtr->getName());
+
+        return success;
+    } else return null_file_pointer;
 }
 
