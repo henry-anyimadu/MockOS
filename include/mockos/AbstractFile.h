@@ -2,8 +2,8 @@
  *Studio 16-21: Abstract Interface
  */
 #pragma once
-#include <vector>
 
+#include <vector>
 
 enum ErrorTypes {
     success,
@@ -17,16 +17,17 @@ enum ErrorTypes {
     allocation_error,
     file_already_exists,
     null_file_pointer,
+    file_open_error,
 };
 
 
 class AbstractFile {
 public:
     AbstractFile() = default;
-    virtual ~AbstractFile()=0;
-    virtual void read()=0;
-    virtual int write(std::vector<char> input)=0;
-    virtual int append(std::vector<char> input)=0;
-    virtual unsigned int getSize()=0;
-    virtual std::string getName()=0;
+    virtual ~AbstractFile() = default;
+    virtual void read() = 0;
+    virtual int write(std::vector<char> input) = 0;
+    virtual int append(std::vector<char> input) = 0;
+    virtual unsigned int getSize() = 0;
+    virtual std::string getName() = 0;
 };

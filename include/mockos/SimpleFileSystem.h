@@ -12,7 +12,11 @@
 class SimpleFileSystem: AbstractFileSystem {
  public:
  SimpleFileSystem();
- ~SimpleFileSystem();
+ ~SimpleFileSystem() override;
+
+ // Delete copy constructor and assignment
+ SimpleFileSystem(const SimpleFileSystem&) = delete;
+ SimpleFileSystem& operator=(const SimpleFileSystem&) = delete;
 
  std::map<std::string, std::unique_ptr<AbstractFile>> files;
  std::set<std::string> openFiles;

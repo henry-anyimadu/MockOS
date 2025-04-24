@@ -11,8 +11,8 @@
 using namespace std;
 
 
-SimpleFileSystem::SimpleFileSystem() {
-}
+SimpleFileSystem::SimpleFileSystem() = default;
+SimpleFileSystem::~SimpleFileSystem() = default;
 
 int SimpleFileSystem::addFile(string filename, AbstractFile *ptr) {
     if (ptr == nullptr) {
@@ -23,41 +23,49 @@ int SimpleFileSystem::addFile(string filename, AbstractFile *ptr) {
         return file_already_exists;
     }
 
-    files.emplace(filename, ptr);
+    files[filename] = std::unique_ptr<AbstractFile>(ptr);
     return success;
 }
 
 int SimpleFileSystem::createFile(std::string filename) {
-    //check to see if the file already exists
-    for (string s : openFiles) {
-        if (s == filename) {
-            return duplicate_files;
-        }
+    // Check if file already exists in files map first
+    if (files.count(filename) > 0) {
+        return file_already_exists;
     }
-    //decide what file to create based upon the file extension
+
+    // Check if file is open
+    if (openFiles.count(filename) > 0) {
+        return duplicate_files;
+    }
+
+    // Get file extension
     const std::size_t pos = filename.find_last_of('.');
+    if (pos == std::string::npos) {
+        return unknown_extension;
+    }
+
     string ext = filename.substr(pos + 1);
-    std::unique_ptr<AbstractFile> newFile;
+
+    AbstractFile* newFile = nullptr;
 
     if (ext == "img") {
-        //dynamically allocate an image file and add it to the files
-        newFile = std::make_unique<ImageFile>(filename);
-        if (addFile(std::move(filename), std::move(newFile).get())) {
-            return success;
-        }
-        return allocation_error;
+        newFile = new ImageFile(filename);
     }
     else if (ext == "txt") {
-        //dynamically allocate an text file and add it to the files
-        newFile = std::make_unique<TextFile>(filename);
-        if (addFile(std::move(filename), std::move(newFile).get())) {
-            return success;
-        }
-        return allocation_error;
+        newFile = new TextFile(filename);
     }
     else {
         return unknown_extension;
     }
+
+    // Add the file to the system
+    int result = addFile(filename, newFile);
+    if (result != success) {
+        delete newFile;  // Clean up if adding failed
+        return result;
+    }
+
+    return success;
 }
 
 AbstractFile *SimpleFileSystem::openFile(string filename) {
@@ -71,7 +79,7 @@ AbstractFile *SimpleFileSystem::openFile(string filename) {
 
     AbstractFile* filePtr = iterator->second.get();
 
-
+    // Return nullptr if the file is already open
     if (openFiles.count(filename) > 0) {
         return nullptr;
     }
@@ -88,6 +96,23 @@ int SimpleFileSystem::closeFile(AbstractFile *filePtr) {
         openFiles.erase(filePtr->getName());
 
         return success;
-    } else return null_file_pointer;
+    }
+    return null_file_pointer;
+}
+
+int SimpleFileSystem::deleteFile(string filename) {
+    // Check if the file exists
+    auto iterator = files.find(filename);
+    if (iterator == files.end()) {
+        return null_file_pointer; // Return error code
+    }
+
+    // Check if file is currently open
+    if (openFiles.count(filename) > 0) {
+        return file_open_error;
+    }
+
+    files.erase(iterator); // Erase the file and have the unique_ptr handle memory allocation
+    return success;
 }
 

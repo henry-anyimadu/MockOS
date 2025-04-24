@@ -8,74 +8,68 @@
 
 #include <iostream>
 
+#include "mockos/SimpleFileSystem.h"
+#include "mockos/TextFile.h"
+
+using namespace std;
+
+// Helper function to convert string to vector<char>
+vector<char> stringToVector(const string& str) {
+    return {str.begin(), str.end()};
+}
 
 std::vector<char> toVec(const std::string& s) {
     return {s.begin(), s.end()};
 }
 
 int main(int argc, char* argv[]) {
+    // Test the SimpleFileSystem in this studio specifically
+    SimpleFileSystem sys;
+    cout << "--Testing SimpleFileSystem--" << endl;
 
-    //write an example image
-    std::unique_ptr<AbstractFile> file = std::make_unique<ImageFile>("ImageFile");
+    auto* text_file = new TextFile("poem.txt");
+    auto* image_file = new ImageFile("painting.img");
 
+    // addFile
+    cout << "--AddFile--" << endl;
 
-    //form a good input
-    std::vector<char> good3x3 = toVec(
-        "XXX"
-        "X X"
-        "XXX"
-        "3"
-    );
+    int result = sys.addFile(text_file->getName(), text_file);
+    cout << "Result from adding a text file: " << result << endl;
 
-    int write_result = file ->write(good3x3);
-    file ->read();
-    std::cout << "Write 1 Results: " << write_result << std::endl;
+    result = sys.addFile(image_file->getName(), image_file);
+    cout << "Result from adding a image file: " << result << endl;
 
-    //form an empty input (should print 1)
-    std::vector<char> empty = toVec({});
-    int write_result2 = file ->write(empty);
-    file -> read();
-    std::cout << "Write 2 Results: " << write_result2 << std::endl;
+    // createFile
+    cout << "--CreateFile--" << endl;
+    result = sys.createFile("lab.txt");
+    cout << "Text result from createFile: " << result << endl;
+    result = sys.createFile("4o.img");
+    cout << "Image Result from createFile: " << result << endl;
 
-    //last char is not a digit (should print 2)
-    std::vector<char> good3x3_2 = toVec(
-            "XXX"
-            "X X"
-            "XXX"
-        );
-    int write_result3 = file -> write(good3x3_2);
-    file -> read();
-    std::cout << "Write 3 Results: " << write_result3 << std::endl;
+    // This should fail (unrecognized extension)
+    result = sys.createFile("poem.mp3");
+    cout << "This should be non-zero: " << result << endl;
 
-    //size mismatch error (should print 3)
-    std::vector<char> good3x3_3 = toVec(
-    "XXX"
-    "X X"
-    "XXXX"
-    "3"
-        );
-    int write_result4 = file -> write(good3x3_3);
-    file -> read();
-    std::cout << "Write 4 Results: " << write_result4 << std::endl;
+    // Testing file operations: open, write, read, close
+    cout << "\n-- Testing text file operations --" << endl;
+    AbstractFile* openedFile = sys.openFile("lab.txt");
+    if (openedFile != nullptr) {
+        cout << "Successfully opened sample text file" << endl;
 
+        // Write to the file
+        vector<char> content = stringToVector("Hello, this is a test file!");
+        result = openedFile->write(content);
+        cout << "Writing to file result: " << endl;
 
-    //Illegal Pixel Character (should print 4)
-    std::vector<char> badPixel = toVec(
-        "XXX"
-        "X X"
-        "XXX"
-        "3"
-    );
-    badPixel[4] = 'Z'; //invalid pixel location for a 3x3 grid
-    int write_result5 = file -> write(badPixel);
-    file -> read();
-    std::cout << "Write 5 Results: " << write_result5 << std::endl;
+        // Read from the file
+        cout << "File content: ";
+        openedFile->read();
 
-    //append shouldn't work (return 5)
-    int write_result6 = file ->append(good3x3);
-    file -> read();
-    std::cout << "Write 6 Results: " << write_result6 << std::endl;
-
-
+        // Close the file
+        result = sys.closeFile(openedFile);
+        cout << "Closing file result: " << endl;
+    } else {
+        cout << "Failed to open sample text file" << endl;
+    }
     return success;
 }
