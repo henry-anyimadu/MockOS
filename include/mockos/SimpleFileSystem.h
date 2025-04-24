@@ -9,7 +9,7 @@
 #include <set>
 #include "AbstractFileSystem.h"
 
-class SimpleFileSystem: AbstractFileSystem {
+class SimpleFileSystem: public AbstractFileSystem {
  public:
  SimpleFileSystem();
  ~SimpleFileSystem() override;
@@ -18,7 +18,7 @@ class SimpleFileSystem: AbstractFileSystem {
  SimpleFileSystem(const SimpleFileSystem&) = delete;
  SimpleFileSystem& operator=(const SimpleFileSystem&) = delete;
 
- std::map<std::string, std::unique_ptr<AbstractFile>> files;
+ std::map<std::string, AbstractFile*> files;
  std::set<std::string> openFiles;
 
  int addFile(std::string filename, AbstractFile *) override;
