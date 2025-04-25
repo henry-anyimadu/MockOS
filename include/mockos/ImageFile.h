@@ -4,6 +4,7 @@
 
 #pragma once
 #include "AbstractFile.h"
+#include "AbstractFileVisitor.h"
 #include <string>
 #include <vector>
 
@@ -28,10 +29,10 @@ public:
     int append(std::vector<char> input) override;
 
     // If AbstractFile.h must remain `void read()`, change this back and update .cpp
-    void read() override; // As per current AbstractFile.h
+    std::vector<char> read() override; // Updated in studio 19
 
     // Accept method for Visitor pattern (if needed)
-    // virtual void accept(AbstractFileVisitor* visitor) override;
+    void accept(AbstractFileVisitor* visitor) override;
 
     // Helper method to get the dimension (optional, could be useful)
     // unsigned int getDimension() const { return size; }

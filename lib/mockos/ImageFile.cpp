@@ -84,17 +84,11 @@ int ImageFile::append(std::vector<char> input) {
 }
 
 // Prints the image data to the console (formatted)
-void ImageFile::read() {
-    unsigned int empty = 0;
-     if (size == empty) {
-        return; // Nothing to print if size is 0
-    }
-    for (unsigned int y = 0; y < size; ++y) {
-        for (unsigned int x = 0; x < size; ++x) {
-            // Calculate index without bounds checking (assuming contents is correct size)
-            unsigned int index = y * size + x;
-            std::cout << contents[index];
-        }
-        std::cout << std::endl; // Newline after each row
-    }
+std::vector<char> ImageFile::read() {
+    return contents;
 }
+
+void ImageFile::accept(AbstractFileVisitor *visitor) {
+    visitor->visit_ImageFile(this);
+}
+

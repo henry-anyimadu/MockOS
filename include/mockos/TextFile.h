@@ -3,6 +3,7 @@
  */
 
 #include "AbstractFile.h"
+#include "AbstractFileVisitor.h"
 
 class TextFile: public AbstractFile {
 public:
@@ -10,8 +11,9 @@ public:
     unsigned int getSize() override;
     std::string getName() override;
     int append(std::vector<char> in) override;
-    void read() override;
+    std::vector<char> read() override;
     int write(std::vector<char> in) override;
+    void accept(AbstractFileVisitor* visitor) override;
     ~TextFile() override;
 private:
     std::string name;

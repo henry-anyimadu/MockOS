@@ -20,14 +20,16 @@ enum ErrorTypes {
     file_open_error,
 };
 
+class AbstractFileVisitor; // Forward declaration needed
 
 class AbstractFile {
 public:
     AbstractFile() = default;
     virtual ~AbstractFile() = default;
-    virtual void read() = 0;
+    virtual std::vector<char> read() = 0; // Changed from void to vector<char>
     virtual int write(std::vector<char> input) = 0;
     virtual int append(std::vector<char> input) = 0;
     virtual unsigned int getSize() = 0;
     virtual std::string getName() = 0;
+    virtual void accept(AbstractFileVisitor* visitor) = 0; // Added for Visitor pattern
 };

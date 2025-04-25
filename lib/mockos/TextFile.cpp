@@ -3,7 +3,7 @@
  */
 
 #include "mockos/TextFile.h"
-
+#include "mockos/AbstractFileVisitor.h"
 #include <iostream>
 
 
@@ -37,16 +37,16 @@ int TextFile::append(std::vector<char> in) {
     return success;
 }
 
-void TextFile::read() {
-    for (char i: contents) {
-        cout << i;
-    }
-    cout << endl;
+vector<char> TextFile::read() {
+    return contents;
 }
 
-TextFile::~TextFile() {
-
+void TextFile::accept(AbstractFileVisitor *visitor) {
+    visitor->visit_TextFile(this);
 }
+
+
+TextFile::~TextFile() {}
 
 
 
