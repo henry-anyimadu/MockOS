@@ -23,7 +23,7 @@ int SimpleFileSystem::addFile(string filename, AbstractFile *ptr) {
         return file_already_exists;
     }
 
-    files[filename] = std::unique_ptr<AbstractFile>(ptr);
+    files[filename] = ptr;
     return success;
 }
 
@@ -77,7 +77,7 @@ AbstractFile *SimpleFileSystem::openFile(string filename) {
         return nullptr;
     }
 
-    AbstractFile* filePtr = iterator->second.get();
+    AbstractFile* filePtr = iterator->second;
 
     // Return nullptr if the file is already open
     if (openFiles.count(filename) > 0) {
