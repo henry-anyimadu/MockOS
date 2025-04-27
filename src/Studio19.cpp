@@ -1,3 +1,7 @@
+/*
+ * Studio 19 Main Loop
+ */
+
 #include "mockos/TextFile.h"
 #include "mockos/ImageFile.h"
 #include "mockos/BasicDisplayVisitor.h"
