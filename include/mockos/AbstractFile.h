@@ -18,6 +18,7 @@ enum ErrorTypes {
     file_already_exists,
     null_file_pointer,
     file_open_error,
+    incorrect_password,
 };
 
 class AbstractFileVisitor; // Forward declaration needed
