@@ -9,7 +9,7 @@
 
 using namespace std;
 
-TextFile::TextFile(std::string input):name(input) {
+TextFile::TextFile(string input):name(input) {
 }
 
 unsigned int TextFile::getSize() {
@@ -46,7 +46,7 @@ void TextFile::accept(AbstractFileVisitor *visitor) {
 }
 
 
-TextFile::~TextFile() {}
+TextFile::~TextFile() = default;
 
 
 
