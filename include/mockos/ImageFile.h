@@ -16,6 +16,10 @@ private: // Make member variables private
     std::string name;
     std::vector<char> contents;
     unsigned int size; // Stores the dimension 'n'
+    std::size_t index(int x, int y) const {
+        // y * width + x
+        return static_cast<std::size_t>(y) * size + static_cast<std::size_t>(x);
+    }
 
 public:
     // Constructor and Destructor
