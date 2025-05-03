@@ -17,21 +17,23 @@ void TouchCommand::displayInfo() {
 
 int TouchCommand::execute(std::string filename) {
     // Create the file using the file factory
+    //THIS LINE IS FAILING
     AbstractFile* file = fileFactory->createFile(filename);
 
     // If file creation failed, return an error
     if (file == nullptr) {
-        return static_cast<int>(ErrorTypes::allocation_error);
+        return allocation_error;
     }
 
     // Add the file to the file system
     int result = fileSystem->addFile(file->getName(), file);
 
+
     // If adding to file system failed, delete the file and return an error
-    if (result != static_cast<int>(ErrorTypes::success)) {
+    if (result != success) {
         delete file;
         return result;
     }
 
-    return static_cast<int>(ErrorTypes::success);
+    return success;
 }

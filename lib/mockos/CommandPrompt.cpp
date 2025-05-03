@@ -110,8 +110,8 @@ int CommandPrompt::run() {
                     string args = input.substr(spacePos + 1);
                     int result = cmdIter->second->execute(args);
 
-                    if (result != SUCCESS) {
-                        cout << "Command failed to execute." << endl;
+                    if (result != success) {
+                        cout << "Command failed to execute."<< endl;
                     }
                 } else {
                     cout << "Command not found: " << firstWord << endl;

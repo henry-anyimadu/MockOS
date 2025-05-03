@@ -4,6 +4,7 @@
 #include "./mockos/SimpleFileSystem.h"
 #include "./mockos/AbstractFileSystem.h"
 #include <string>
+#include <iostream>
 
 #include "mockos/ImageFile.h"
 #include "mockos/TextFile.h"

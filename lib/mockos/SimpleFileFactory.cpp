@@ -5,10 +5,11 @@
 #include "mockos/TextFile.h"
 #include "mockos/ImageFile.h"
 #include <string>
+#include <iostream>
 
 AbstractFile* SimpleFileFactory::createFile(std::string filename) {
     // Get file extension
-    const std::size_t pos = filename.find_last_of('.');
+    std::size_t pos = filename.find_last_of('.');
     if (pos == std::string::npos) {
         return nullptr; // No extension found
     }

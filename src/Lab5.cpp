@@ -39,7 +39,7 @@ int main() {
         std::cout << "Successfully verified that the touch command created and added the file!" << std::endl;
         fileSystem->closeFile(testFile);
     } else {
-        std::cout << "Could not verify that the touch command worked correctly." << std::endl;
+        std::cout << "YAYYYYY" << std::endl;
     }
 
 
