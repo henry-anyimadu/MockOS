@@ -18,7 +18,9 @@ enum exitValues {
     QUIT = 420,
 };
 
-CommandPrompt::CommandPrompt(AbstractFileSystem *, AbstractFileFactory *): objPointer(nullptr), objFactory(nullptr) {}
+CommandPrompt::CommandPrompt() : objPointer(nullptr), objFactory(nullptr) {}     // Initialize members to nullptr
+
+CommandPrompt::CommandPrompt(AbstractFileSystem* fileSystem, AbstractFileFactory* fileFactory): objPointer(fileSystem), objFactory(fileFactory) {}
 
 void CommandPrompt::setFileSystem(AbstractFileSystem* file_system) {
     objPointer = file_system;
@@ -37,7 +39,7 @@ int CommandPrompt::addCommand(string params, AbstractCommand* cmd) {
 
 void CommandPrompt::listCommands() { // Prints the name of all the commands
     for (auto it = cmdObjects.begin(); it != cmdObjects.end(); it++) {
-        cout << it->first << endl; // Might need to print second as well, but we'll see
+        cout << it->first << endl;
     }
 }
 
@@ -53,13 +55,72 @@ string CommandPrompt::prompt() {
 int CommandPrompt::run() {
     while (1) {
         string input = prompt();
+
+        // Check if the input is "q", if it is quit and return an appropriate non-zero value
         if (input == "q") {
             return QUIT;
         }
+
+        // If the input is "help", call the listCommands method
         if (input == "help") {
             listCommands();
+            continue;
         }
 
+        // Check if input contains a space (indicating more than one word)
+        size_t spacePos = input.find(' ');
+
+        if (spacePos == string::npos) {
+            // Input is only 1 word (not "q" or "help")
+            // Search the map of commands for the command that matches the input
+            auto cmdIter = cmdObjects.find(input);
+
+            if (cmdIter != cmdObjects.end()) {
+                // If command is found, invoke execute with empty string
+                int result = cmdIter->second->execute("");
+
+                if (result != SUCCESS) {
+                    cout << "Command failed to execute." << endl;
+                }
+            } else {
+                cout << "Command not found: " << input << endl;
+            }
+        } else {
+            // Input is longer than 1 word
+            // Extract the first word
+            string firstWord = input.substr(0, spacePos);
+
+            if (firstWord == "help") {
+                // If first word is "help", extract second string (command name)
+                string commandName = input.substr(spacePos + 1);
+                auto cmdIter = cmdObjects.find(commandName);
+
+                if (cmdIter != cmdObjects.end()) {
+                    // Call displayInfo() on the command
+                    cmdIter->second->displayInfo();
+                } else {
+                    cout << "Command not found: " << commandName << endl;
+                }
+            } else {
+                // First word is a command name
+                auto cmdIter = cmdObjects.find(firstWord);
+
+                if (cmdIter != cmdObjects.end()) {
+                    // Pass remaining input as the parameter
+                    string args = input.substr(spacePos + 1);
+                    int result = cmdIter->second->execute(args);
+
+                    if (result != SUCCESS) {
+                        cout << "Command failed to execute." << endl;
+                    }
+                } else {
+                    cout << "Command not found: " << firstWord << endl;
+                }
+            }
+        }
     }
+
+    return SUCCESS; // This line should never be reached
 }
+
 CommandPrompt::~CommandPrompt() {}

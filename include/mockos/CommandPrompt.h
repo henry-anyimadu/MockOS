@@ -13,15 +13,16 @@
 
 class CommandPrompt {
     public:
+        CommandPrompt();
         CommandPrompt(AbstractFileSystem*, AbstractFileFactory*);
-        virtual ~CommandPrompt() = 0;
+        virtual ~CommandPrompt();
         virtual void setFileSystem(AbstractFileSystem*);
         virtual void setFileFactory(AbstractFileFactory*);
         virtual int addCommand(std::string, AbstractCommand*);
+        virtual int run();
     protected:
-        virtual void listCommands() = 0;
-        virtual std::string prompt() = 0;
-        virtual int run() = 0;
+        virtual void listCommands();
+        virtual std::string prompt();
 
     std::map<std::string, AbstractCommand*> cmdObjects;
     AbstractFileSystem* objPointer;
