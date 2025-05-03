@@ -24,6 +24,8 @@ enum ErrorTypes {
     cat_file_error,
     cat_pointer_error,
     cat_ejection_error,
+    dp_file_error,
+    dp_ext_error
 };
 
 class AbstractFileVisitor; // Forward declaration needed
