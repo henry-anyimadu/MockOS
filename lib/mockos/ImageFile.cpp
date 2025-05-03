@@ -85,13 +85,13 @@ int ImageFile::append(std::vector<char> input) {
 
 // Prints the image data to the console (formatted)
 std::vector<char> ImageFile::read() {
-    // print from top row (y=0) down to bottom (y=size-1)
-    for (int y = 0; y < size; ++y) {
-        for (int x = 0; x < size; ++x) {
-            std::cout << contents[index(x, y)];
-        }
-        std::cout << '\n';
-    }
+    // Print the image (for backward compatibility with Studio 16-18 tests)
+    // for (int y = 0; y < size; ++y) {
+    //     for (int x = 0; x < size; ++x) {
+    //         std::cout << contents[index(x, y)];
+    //     }
+    //     std::cout << '\n';
+    // }
     return contents;
 }
 

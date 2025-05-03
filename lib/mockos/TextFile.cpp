@@ -46,8 +46,10 @@ int TextFile::append(std::vector<char> in) {
 
 
 vector<char> TextFile::read() {
-    for (char c : contents)
-        std::cout << c;
+    // Print the content (for backward compatibility with Studio 16-18 tests)
+    // for (char c : contents)
+    //     std::cout << c;
+
     return contents;
 }
 

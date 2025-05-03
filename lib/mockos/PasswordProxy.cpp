@@ -26,6 +26,7 @@ vector<char> PasswordProxy::read() {
     if (pw == password) {
         return protectedFile->read();
     }
+    return vector<char>();;
 }
 
 int PasswordProxy::write(vector<char> input) {
