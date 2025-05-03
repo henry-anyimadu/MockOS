@@ -21,6 +21,9 @@ enum ErrorTypes {
     incorrect_password,
     ls_m_file_error,
     ls_m_extension_error,
+    cat_file_error,
+    cat_pointer_error,
+    cat_ejection_error,
 };
 
 class AbstractFileVisitor; // Forward declaration needed

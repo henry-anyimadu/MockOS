@@ -2,6 +2,7 @@
 
 #include "mockos/AbstractFileFactory.h"
 #include "mockos/AbstractFileSystem.h"
+#include "mockos/CatCommand.h"
 #include "mockos/CommandPrompt.h"
 #include "mockos/SimpleFileFactory.h"
 #include "mockos/SimpleFileSystem.h"
@@ -23,6 +24,10 @@ int main() {
     //Create the LSCommand with the file system
     LSCommand* lsCommand = new LSCommand(fileSystem);
 
+
+    //Create the cat command with the file system
+    CatCommand* catcommand = new CatCommand(fileSystem);
+
     // Create a CommandPrompt and configure it
     CommandPrompt* cp = new CommandPrompt(fileSystem, fileFactory);
 
@@ -35,6 +40,9 @@ int main() {
     // Adds remove to cmd
     cp->addCommand("rm",removeCommand);
 
+    //Adds cat to cmd
+    cp->addCommand("cat",catcommand);
+
     // Run the command prompt
     cp->run();
 
@@ -45,7 +53,7 @@ int main() {
         std::cout << "Successfully verified that the touch command created and added the file!" << std::endl;
         fileSystem->closeFile(testFile);
     } else {
-        std::cout << "YAYYYYY" << std::endl;
+        std::cout << "NULL PTR" << std::endl;
     }
 
 
