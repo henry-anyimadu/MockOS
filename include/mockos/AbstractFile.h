@@ -19,6 +19,8 @@ enum ErrorTypes {
     null_file_pointer,
     file_open_error,
     incorrect_password,
+    ls_m_file_error,
+    ls_m_extension_error,
 };
 
 class AbstractFileVisitor; // Forward declaration needed
