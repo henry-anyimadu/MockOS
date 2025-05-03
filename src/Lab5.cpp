@@ -7,6 +7,7 @@
 #include "mockos/SimpleFileSystem.h"
 #include "mockos/TouchCommand.h"
 #include "mockos/LSCommand.h"
+#include "mockos/RemoveCommand.h"
 
 int main() {
     // Dynamically allocate a SimpleFileSystem, a SimpleFileFactory, and a TouchCommand
@@ -16,6 +17,8 @@ int main() {
     // Create the TouchCommand with the file system and factory
     TouchCommand* touchCommand = new TouchCommand(fileSystem, fileFactory);
 
+    // Create RemoveCommand w/ the file system
+    RemoveCommand* removeCommand = new RemoveCommand(fileSystem);
 
     //Create the LSCommand with the file system
     LSCommand* lsCommand = new LSCommand(fileSystem);
@@ -28,6 +31,9 @@ int main() {
 
     // Add the LS command to the command prompt
     cp->addCommand("ls",lsCommand);
+
+    // Adds remove to cmd
+    cp->addCommand("rm",removeCommand);
 
     // Run the command prompt
     cp->run();
