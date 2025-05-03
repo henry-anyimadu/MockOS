@@ -4,6 +4,7 @@
 #include "mockos/AbstractFileSystem.h"
 #include "mockos/CatCommand.h"
 #include "mockos/CommandPrompt.h"
+#include "mockos/DisplayCommand.h"
 #include "mockos/SimpleFileFactory.h"
 #include "mockos/SimpleFileSystem.h"
 #include "mockos/TouchCommand.h"
@@ -28,6 +29,10 @@ int main() {
     //Create the cat command with the file system
     CatCommand* catcommand = new CatCommand(fileSystem);
 
+
+    //create the display command with the file system
+    DisplayCommand* dscommand = new DisplayCommand(fileSystem);
+
     // Create a CommandPrompt and configure it
     CommandPrompt* cp = new CommandPrompt(fileSystem, fileFactory);
 
@@ -42,6 +47,9 @@ int main() {
 
     //Adds cat to cmd
     cp->addCommand("cat",catcommand);
+
+    //Adds display to cmd
+    cp->addCommand("ds",dscommand);
 
     // Run the command prompt
     cp->run();

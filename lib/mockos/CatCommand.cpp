@@ -9,6 +9,12 @@
 
 CatCommand::CatCommand(AbstractFileSystem* fs) : fileSystem(fs) {}
 
+auto isImageFile = [](const std::string& name) {
+    return name.size() >= 4 &&
+           name.compare(name.size() - 4, 4, ".img") == 0;
+};
+
+
 void CatCommand::displayInfo() {
     std::cout << "Concatenate/Edit a file\n"
                  "Usage:\n"
@@ -66,15 +72,23 @@ int CatCommand::execute(std::string args) {
             return success;
         }
         if (line == ":wq") {
-            //wq inputted, close with saving
-            int res = appendMode ? fileptr -> append(buf) : fileptr->write(buf);
+            // ------- NEW: tidy buffer before saving -----------
+            if (isImageFile(filename)) {
+                // remove *all* new‑lines for .img
+                buf.erase(std::remove(buf.begin(), buf.end(), '\n'), buf.end());
+            } else if (!buf.empty() && buf.back() == '\n') {
+                // drop just the final newline for text
+                buf.pop_back();
+            }
+            // ---------------------------------------------------
+
+            int res = appendMode ? fileptr->append(buf)
+                                 : fileptr->write(buf);
             fileSystem->closeFile(fileptr);
             return res;
         }
-
-        //storing user data
-        buf.insert(buf.end(),line.begin(), line.end());
-        buf.push_back('\n');
+        buf.insert(buf.end(), line.begin(), line.end());
+        buf.push_back('\n');          // keep newline between user lines
     }
 
     //NO wq or q, reached EOF
@@ -84,5 +98,7 @@ int CatCommand::execute(std::string args) {
 
 
 }
+
+
 
 
