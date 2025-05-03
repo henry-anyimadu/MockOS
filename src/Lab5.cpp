@@ -56,9 +56,6 @@ int main() {
         std::cout << "NULL PTR" << std::endl;
     }
 
-
-
-
     // Clean up
     delete cp;
     delete fileSystem;

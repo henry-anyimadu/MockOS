@@ -7,7 +7,7 @@
 #include "AbstractFile.h"
 #include <string>
 
-class PasswordProxy:AbstractFile {
+class PasswordProxy: public AbstractFile {
 private:
     AbstractFile* protectedFile;
     std::string password;
