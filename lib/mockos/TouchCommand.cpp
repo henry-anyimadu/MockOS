@@ -44,7 +44,7 @@ int TouchCommand::execute(std::string input) {
 
         // Prompt for password
         std::cout << "Enter Password: ";
-        std::cin >> password;
+        getline(std::cin, password);
 
         // Initialize PasswordProxy
         PasswordProxy* newFile = new PasswordProxy(file, password);
@@ -69,4 +69,5 @@ int TouchCommand::execute(std::string input) {
     }
 
     return success;
+
 }

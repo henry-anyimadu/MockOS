@@ -5,6 +5,7 @@
 #include "mockos/PasswordProxy.h"
 #include "mockos/AbstractFile.h"
 #include <iostream>
+#include <limits>
 
 using namespace std;
 
@@ -17,7 +18,9 @@ PasswordProxy::~PasswordProxy() {
 string PasswordProxy::passwordPrompt() {
     string input;
     cout << "Enter Password: ";
-    cin >> input;
+    // Clear leftover space currently in the input buffer
+    cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    getline(cin, input);
     return input;
 }
 
