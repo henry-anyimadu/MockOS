@@ -20,7 +20,7 @@ class SimpleFileSystem: public AbstractFileSystem {
 
  std::map<std::string, AbstractFile*> files;
  std::set<std::string> openFiles;
-
+ std::set<std::string> getFileNames() override;
  int addFile(std::string filename, AbstractFile *) override;
  int createFile(std::string filename) override;
  AbstractFile *openFile(std::string filename) override;
