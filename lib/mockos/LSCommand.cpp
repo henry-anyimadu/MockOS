@@ -6,6 +6,9 @@
 #include "mockos/LSCommand.h"
 #include <iostream>
 #include <iomanip>
+#include <algorithm>
+
+#define BREATHING_ROOM 2
 
 LSCommand::LSCommand(AbstractFileSystem* fs) : fileSystem(fs) {}
 
@@ -17,51 +20,59 @@ void LSCommand::displayInfo() {
                  "  ls -m    (one line per file with metadata)\n";
 }
 
-int LSCommand::execute(std::string args) {
-    //safety checks for args
-    const auto names = fileSystem->getFileNames();
 
-    //DEFAULT TWO COLUMN VIEW
+int LSCommand::execute(std::string args) {
+    auto names = fileSystem->getFileNames();   // copy – we’ll scan twice
+
+    // ---------- default two‑column view ----------
     if (args.empty()) {
-        const std::size_t col_w = 22; //fits 20-char max nicely
+        const std::size_t COL_W = 22;
         std::size_t col = 0;
-        for (const auto& name: names) {
-            std::cout << std::left << std::setw(col_w) << name;
+        for (const auto& name : names) {
+            std::cout << std::left << std::setw(COL_W) << name;
             if (++col % 2 == 0) std::cout << '\n';
         }
         if (col % 2) std::cout << '\n';
         return success;
     }
 
+    // ---------- ‑m (meta) view ----------
     if (args == "-m") {
-        for (const auto& name: names) {
+        /* 1) find longest file name and longest type string */
+        std::size_t w_name = 0, w_type = 0;
+        for (const auto& name : names) {
+            w_name = std::max(w_name, name.size());
+            std::string ext = name.substr(name.find_last_of('.') + 1);
+            std::string type = (ext == "txt") ? "text" :
+                               (ext == "img") ? "image" : ext;
+            w_type = std::max(w_type, type.size());
+        }
+        w_name += BREATHING_ROOM;                 // a little breathing room
+        w_type += BREATHING_ROOM;
+
+        /* 2) print rows */
+        for (const auto& name : names) {
             AbstractFile* fp = fileSystem->openFile(name);
-            if (fp == nullptr) {
+            if (!fp) {
                 std::cerr << "ls: cannot open \"" << name << "\"\n";
                 return ls_m_file_error;
             }
-            const std::size_t size = fp->getSize();
+            std::size_t size = fp->getSize();
             fileSystem->closeFile(fp);
 
-            std::string type = "unknown";
-            const std::size_t dot = name.find_last_of('.');
-            if (dot != std::string::npos) {
-                const std::string ext = name.substr(dot+1);
-                if (ext == "txt") type = "text";
-                else if (ext == "img") type = "image";
-                else type = ext;
-            }
+            std::string ext  = name.substr(name.find_last_of('.') + 1);
+            std::string type = (ext == "txt") ? "text" :
+                               (ext == "img") ? "image" : ext;
 
-            //print out formatted
-            std::cout << name << "   " << type << "        " << size << '\n';
-
-
+            std::cout << std::left  << std::setw(w_name) << name
+                      << std::left  << std::setw(w_type) << type
+                      << std::right << size << '\n';
         }
         return success;
     }
 
+    // unknown flag
     std::cerr << "ls: unrecognized option \"" << args << "\"\n";
     return ls_m_extension_error;
-
-
 }
+

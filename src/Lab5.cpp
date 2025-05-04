@@ -20,6 +20,8 @@
 #include "mockos/RenameParsingStrategy.h"
 #include "mockos/RenameMacro.h"
 #include "mockos/Lab5Tests.h"
+#include "mockos/TouchEditMarco.h"
+#include "mockos/TouchEditParsingStrategy.h"
 
 
 
@@ -63,8 +65,23 @@ int main() {
     renameCmd->setParseStrategy(rnParse);
 
 
+
+    //create touch and edit (te)
+    auto* teMacro = new TouchEditMacro();
+    teMacro->addCommand(touchCommand);
+    teMacro->addCommand(catcommand);
+    TouchEditParsingStrategy* teParse = new TouchEditParsingStrategy();
+    teMacro->setParseStrategy(teParse);
+
+
+
     //Add the rn command through the MacroCommands interface
     cp->addCommand("rn", renameCmd);
+
+
+
+    //add the te (touch and edit) command through the MacroCommands interface
+    cp->addCommand("te", teMacro);
 
     // Add the touch command to the command prompt
     cp->addCommand("touch", touchCommand);
