@@ -1,5 +1,6 @@
 //
-// Created by Jonah Sachs on 5/3/25.
+// Lab5Tests.cpp: This file holds our unit tests for Lab 5. These methods test the commands we have
+// implemented throughout the course of this lab.
 //
 
 
@@ -9,7 +10,10 @@
 
 #include "mockos/TextFile.h"
 #include "mockos/Lab5Tests.h"
+
+#include "mockos/MacroCommand.h"
 #include "mockos/PasswordProxy.h"
+#include "mockos/RenameParsingStrategy.h"
 
 
 int Test::runCopyTests(AbstractFileSystem* fs, TouchCommand* touch, CopyCommand* cp)
@@ -160,6 +164,114 @@ int Test::runRenameTests(AbstractFileSystem* fs, TouchCommand* touch, AbstractCo
 
     if (fooPtr) fs->closeFile(fooPtr);
     if (barPtr) fs->closeFile(barPtr);
+
+    std::cerr.rdbuf(oldBuf); // Resource Cleanup
+    return failures;
+}
+
+// Test for LSCommand
+int Test::runLSTests(AbstractFileSystem* fs, TouchCommand* touch, LSCommand* ls)
+{
+    int failures = 0;
+    const int OK = 0;
+
+    // Create some test files with different types
+    assert(touch->execute("file1.txt") == OK);
+    assert(touch->execute("file2.img") == OK);
+    assert(touch->execute("file3.txt") == OK);
+
+    // Test normal ls (two-column output)
+    if (ls->execute("") != OK) ++failures;
+
+    // Test ls -m (metadata output)
+    if (ls->execute("-m") != OK) ++failures;
+
+    // Test invalid option
+    if (ls->execute("-x") == OK) ++failures;
+
+    return failures;
+}
+
+// Test for RemoveCommand
+int Test::runRemoveTests(AbstractFileSystem* fs, TouchCommand* touch, RemoveCommand* rm)
+{
+    int failures = 0;
+    const int OK = 0;
+
+    // Create and remove a text file
+    assert(touch->execute("temp.txt") == OK);
+    if (rm->execute("temp.txt") != OK) ++failures;
+    if (fs->openFile("temp.txt") != nullptr) ++failures;
+
+    // Create and remove an image file
+    assert(touch->execute("temp.img") == OK);
+    if (rm->execute("temp.img") != OK) ++failures;
+
+    // Try to remove non-existent file
+    if (rm->execute("nonexistent.txt") == OK) ++failures;
+
+    // Test removing an open file (should fail)
+    assert(touch->execute("open.txt") == OK);
+    AbstractFile* file = fs->openFile("open.txt");
+    if (file && rm->execute("open.txt") == OK) ++failures;
+    if (file) fs->closeFile(file);
+
+    return failures;
+}
+
+// Test for DisplayCommand
+int Test::runDisplayTests(AbstractFileSystem* fs, TouchCommand* touch, DisplayCommand* ds)
+{
+    int failures = 0;
+    const int OK = 0;
+
+    // Create and populate a text file
+    assert(touch->execute("display.txt") == OK);
+    AbstractFile* file = fs->openFile("display.txt");
+    if (file) {
+        file->write({'T','e','s','t'});
+        fs->closeFile(file);
+    }
+
+    // Test formatted display
+    if (ds->execute("display.txt") != OK) ++failures;
+
+    // Test unformatted display (-d)
+    if (ds->execute("display.txt -d") != OK) ++failures;
+
+    // Test with non-existent file
+    if (ds->execute("noexist.txt") == OK) ++failures;
+
+    // Test with image file
+    assert(touch->execute("image.img") == OK);
+    file = fs->openFile("image.img");
+    if (file) {
+        file->write({'X','X','X','X','2'});
+        fs->closeFile(file);
+    }
+    if (ds->execute("image.img") != OK) ++failures;
+    if (ds->execute("image.img -d") != OK) ++failures;
+
+    return failures;
+}
+
+// Test for MacroCommand functionality
+int Test::runMacroTests()
+{
+    int failures = 0;
+    const int OK = 0;
+
+    MacroCommand macro;
+
+    // Test macro without parsing strategy (should fail)
+    if (macro.execute("test") == OK) ++failures;
+
+    // Test macro with strategy but no commands
+    RenameParsingStrategy* strategy = new RenameParsingStrategy();
+    macro.setParseStrategy(strategy);
+    if (macro.execute("test test") == OK) ++failures;
+
+    delete strategy;
 
     return failures;
 }
