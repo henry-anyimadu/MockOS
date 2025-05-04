@@ -132,5 +132,5 @@ int main() {
     delete fileSystem;
     delete fileFactory;
 
-    return 0;
+    return success;
 }
