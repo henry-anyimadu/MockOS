@@ -1,14 +1,12 @@
 # --------------------------------
-# Create the mockos static library
+# Create the mockos static library (MOCKOS)
 # --------------------------------
 # https://gitlab.com/CLIUtils/modern-cmake/tree/master/examples/extended-project
 file(GLOB headers "${mockos_SOURCE_DIR}/include/mockos/*.h")
 file(GLOB sources "${mockos_SOURCE_DIR}/lib/mockos/*.cpp")
 
 add_library(mockos ${headers} ${sources}
-        ../../include/mockos/RenameMacro.h
         RenameMacro.cpp
-        Lab5Tests.cpp
-        Lab5Tests.h)
+        Lab5Tests.cpp)
 target_include_directories(mockos PUBLIC ${mockos_SOURCE_DIR}/include)
 target_compile_features(mockos PUBLIC cxx_std_14)
