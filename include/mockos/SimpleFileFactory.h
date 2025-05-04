@@ -1,5 +1,7 @@
 /**
 * Studios 16-21: SimpleFileFactory.h
+* Derived from Abstract File Factory Interface
+* Allows for simple file types to be created
  **/
 #pragma once
 

@@ -1,5 +1,7 @@
 /**
 * Studios 16-21: SimpleFileSystem.h
+* Derived from the File system interface
+* Allows for the management of simple file types
  **/
 #pragma once
 

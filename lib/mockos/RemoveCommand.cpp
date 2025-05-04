@@ -1,5 +1,7 @@
 /*
 * Lab 5: RemoveCommand cpp file
+* Allows for the implementation of the rm command
+* Allows the user to remove a file from the filesystem
 */
 
 #include "mockos/RemoveCommand.h"

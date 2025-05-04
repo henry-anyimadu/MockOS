@@ -1,9 +1,11 @@
 /**
  *Studio 16-21: Abstract Interface
+ *AbstractFile.h for defining the Abstract File class
  */
 #pragma once
 
 #include <vector>
+#include "mockos/Constants.h"
 
 enum ErrorTypes {
     success,
@@ -41,11 +43,11 @@ class AbstractFile {
 public:
     AbstractFile() = default;
     virtual ~AbstractFile() = default;
-    virtual std::vector<char> read() = 0; // Changed from void to vector<char>
-    virtual int write(std::vector<char> input) = 0;
-    virtual int append(std::vector<char> input) = 0;
-    virtual unsigned int getSize() = 0;
-    virtual std::string getName() = 0;
-    virtual void accept(AbstractFileVisitor* visitor) = 0; // Added for Visitor pattern
-    virtual AbstractFile* clone(std::string newName) const = 0;
+    virtual std::vector<char> read() = NULL_DEFINITION; // Changed from void to vector<char>
+    virtual int write(std::vector<char> input) = NULL_DEFINITION;
+    virtual int append(std::vector<char> input) = NULL_DEFINITION;
+    virtual unsigned int getSize() = NULL_DEFINITION;
+    virtual std::string getName() = NULL_DEFINITION;
+    virtual void accept(AbstractFileVisitor* visitor) = NULL_DEFINITION; // Added for Visitor pattern
+    virtual AbstractFile* clone(std::string newName) const = NULL_DEFINITION;
 };

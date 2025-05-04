@@ -1,6 +1,7 @@
-//
-// Created by Jonah Sachs on 5/3/25.
-//
+/**
+ *Small cpp for the rn Macrocommands
+ *Include to override displayInfo() and show the proper help message
+ */
 
 #include <iostream>
 #include "mockos/RenameMacro.h"

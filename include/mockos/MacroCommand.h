@@ -1,3 +1,10 @@
+/*
+ *Macro Command Header
+ *Derived from the abstract command interface
+ *Part of Lab 5
+ */
+
+
 #pragma once
 #include "mockos/AbstractCommand.h"
 #include "mockos/AbstractParsingStrategy.h"

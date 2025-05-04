@@ -1,4 +1,11 @@
+/**
+ *Macro Command cpp file for implementing the creation of macrocommands like rn, te
+ */
+
+
+
 #include "mockos/MacroCommand.h"
+#include "mockos/Constants.h"
 #include <iostream>
 
 #include "mockos/AbstractFile.h"
@@ -31,7 +38,7 @@ int MacroCommand::execute(std::string input) {
         return mc_parse_size;
     }
 
-    for (std::size_t i=0; i < commands.size(); ++i) {
+    for (std::size_t i=NULL_DEFINITION; i < commands.size(); ++i) {
         int result = commands[i]->execute(parsed[i]);
         if (result != success) {
             return result;

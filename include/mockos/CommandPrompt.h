@@ -1,5 +1,6 @@
 /*
  * Studio 21: CommandPrompt header file
+ * Takes user input for various commands to be implement in Lab 5
  */
 
 #ifndef MOCKOS_COMMANDPROMPT_H

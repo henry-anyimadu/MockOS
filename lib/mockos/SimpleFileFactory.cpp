@@ -1,5 +1,7 @@
 /**
 * Studios 16-21: SimpleFileFactory.cpp
+* Derived from the file factory interface
+* Allows the user to create files
  **/
 #include "mockos/SimpleFileFactory.h"
 #include "mockos/TextFile.h"

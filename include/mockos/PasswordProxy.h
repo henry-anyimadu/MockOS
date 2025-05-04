@@ -1,5 +1,6 @@
 /*
  * Lab 20: PasswordProxy.h
+ * Defines the password logic for Lab 5 as well
  */
 
 #pragma once

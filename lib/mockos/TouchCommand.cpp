@@ -1,5 +1,6 @@
 /*
  * TouchCommand cpp file for file creation
+ * Implementation of the command, with password protection
  */
 
 #include "mockos/TouchCommand.h"

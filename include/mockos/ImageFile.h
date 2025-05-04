@@ -1,5 +1,5 @@
 /*
- * ImageFile.h
+ * ImageFile.h, as implemented in the studios
  */
 
 #pragma once
@@ -37,9 +37,6 @@ public:
 
     // Accept method for Visitor pattern (if needed)
     void accept(AbstractFileVisitor* visitor) override;
-
-    // Helper method to get the dimension (optional, could be useful)
-    // unsigned int getDimension() const { return size; }
 
     //Helper method to clone for cp
     AbstractFile* clone(std::string newName) const override;

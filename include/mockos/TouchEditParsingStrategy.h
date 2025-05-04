@@ -1,4 +1,10 @@
-// TouchEditParsingStrategy.h
+/**
+ *Parsing Strategy Header for te
+ *Derived from the Parsing Strategy Interface
+ */
+
+
+
 #pragma once
 #include "mockos/AbstractParsingStrategy.h"
 #include <sstream>

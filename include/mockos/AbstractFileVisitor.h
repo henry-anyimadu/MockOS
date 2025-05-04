@@ -1,4 +1,9 @@
-// include/mockos/AbstractFileVisitor.h
+/*
+ *Lab 5: Abstract File Visitor Header
+ *Allows you to visit both file types
+ */
+
+
 #pragma once
 
 // Forward declarations

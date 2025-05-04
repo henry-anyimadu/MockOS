@@ -1,3 +1,8 @@
+/*
+ * Header for the copy command implementation
+ * Lab 5
+ */
+
 #pragma once
 /*
  * CopyCommand

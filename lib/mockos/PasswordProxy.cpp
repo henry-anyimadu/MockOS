@@ -1,5 +1,6 @@
 /*
  * Lab 20: PasswordProxy.cpp
+ * Implementation for the Password proxy for studios and then also for cat command in labs
  */
 
 #include "mockos/PasswordProxy.h"
@@ -19,8 +20,6 @@ PasswordProxy::~PasswordProxy() {
 std::string PasswordProxy::passwordPrompt() {
     std::string input;
     std::cout << "Enter Password: ";
-    // remove this – it flushed the password the tests just sent
-    // std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     std::getline(std::cin, input);
     return input;
 }

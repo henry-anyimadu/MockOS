@@ -1,6 +1,8 @@
 /**
- *Text File
+ *Text File as created in the studios
+ *Simple file type for displaying plaintext
  */
+#pragma once
 
 #include "AbstractFile.h"
 #include "AbstractFileVisitor.h"

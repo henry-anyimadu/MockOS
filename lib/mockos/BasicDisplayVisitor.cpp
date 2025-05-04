@@ -1,8 +1,17 @@
+/**
+ *cpp file for BasicDisplayVistor, deriving from the File visitor interface
+ *Allows you to visit both text and image files
+ */
+
+
+
 #include "mockos/BasicDisplayVisitor.h"
 #include "mockos/TextFile.h"
 #include "mockos/ImageFile.h"
+#include "mockos/Constants.h"
 #include <iostream>
 #include <cmath>
+
 
 void BasicDisplayVisitor::visit_TextFile(TextFile* file) {
     std::vector<char> contents = file->read();
@@ -17,8 +26,8 @@ void BasicDisplayVisitor::visit_ImageFile(ImageFile* file) {
     unsigned int size = static_cast<unsigned int>(sqrt(contents.size()));
 
     // Format the image in a grid pattern
-    for (unsigned int y = 0; y < size; ++y) {
-        for (unsigned int x = 0; x < size; ++x) {
+    for (unsigned int y = NULL_DEFINITION; y < size; ++y) {
+        for (unsigned int x = NULL_DEFINITION; x < size; ++x) {
             unsigned int index = y * size + x;
             std::cout << contents[index];
         }

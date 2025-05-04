@@ -1,3 +1,10 @@
+/*
+ *Header file for creating an overrwitten displayInfo() message for the
+ *rn command
+ */
+
+
+
 #ifndef RENAMEMACRO_H
 #define RENAMEMACRO_H
 

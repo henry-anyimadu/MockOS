@@ -1,6 +1,7 @@
-//
-// Created by Jonah Sachs on 5/3/25.
-//
+/**
+ *TouchEdit Macro
+ *Allows for the overrid of display info to display the proper help for te
+ */
 
 #ifndef TOUCHEDITMARCO_H
 #define TOUCHEDITMARCO_H

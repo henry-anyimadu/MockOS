@@ -1,14 +1,17 @@
 /*
  *CPP File for the ls command
+ *Allows the user to view all files in the file system
+ *Can use -m to view the file metadata
  */
 
 
 #include "mockos/LSCommand.h"
+#include "mockos/Constants.h"
 #include <iostream>
 #include <iomanip>
 #include <algorithm>
 
-#define BREATHING_ROOM 2
+
 
 LSCommand::LSCommand(AbstractFileSystem* fs) : fileSystem(fs) {}
 

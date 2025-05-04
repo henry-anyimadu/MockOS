@@ -1,4 +1,13 @@
+/*
+ * Command Prompt implementation, allows for processing of cmds created in Lab5, and then also
+ * modifiers like -@
+ */
+
+
+
+
 #include "mockos/CommandPrompt.h"
+#include "mockos/Constants.h"
 
 #include <iostream>
 
@@ -53,7 +62,7 @@ string CommandPrompt::prompt() {
 }
 
 int CommandPrompt::run() {
-    while (1) {
+    while (INF_LOOP) {
         string input = prompt();
 
         // Check if the input is "q", if it is quit and return an appropriate non-zero value
@@ -88,7 +97,7 @@ int CommandPrompt::run() {
         } else {
             // Input is longer than 1 word
             // Extract the first word
-            string firstWord = input.substr(0, spacePos);
+            string firstWord = input.substr(NULL_DEFINITION, spacePos);
 
             if (firstWord == "help") {
                 // If first word is "help", extract second string (command name)

@@ -20,7 +20,7 @@
 #include "mockos/RenameParsingStrategy.h"
 #include "mockos/RenameMacro.h"
 #include "mockos/Lab5Tests.h"
-#include "mockos/TouchEditMarco.h"
+#include "mockos/TouchEditMacro.h"
 #include "mockos/TouchEditParsingStrategy.h"
 
 

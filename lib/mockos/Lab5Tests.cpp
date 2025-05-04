@@ -1,6 +1,7 @@
-//
-// Created by Jonah Sachs on 5/3/25.
-//
+/**
+ *Lab5 Tests for unit tests created for different commands
+ *Implemented to clean up the Lab5.cpp file
+ */
 
 
 #include <cassert>
@@ -10,12 +11,13 @@
 #include "mockos/TextFile.h"
 #include "mockos/Lab5Tests.h"
 #include "mockos/PasswordProxy.h"
+#include "mockos/Constants.h"
 
 
 int Test::runCopyTests(AbstractFileSystem* fs, TouchCommand* touch, CopyCommand* cp)
 {
-    int failures = 0;
-    const int OK = 0;
+    int failures = NULL_DEFINITION;
+    const int OK = NULL_DEFINITION;
 
     // 1. text file
     assert(touch->execute("orig.txt") == OK);
@@ -75,8 +77,8 @@ int Test::runCopyTests(AbstractFileSystem* fs, TouchCommand* touch, CopyCommand*
 //  Helper: automated tests for TouchCommand
 int Test::runTouchTests(AbstractFileSystem* fs, TouchCommand* touch)
 {
-    int failures = 0;
-    const int OK = 0;
+    int failures = NULL_DEFINITION;
+    const int OK = NULL_DEFINITION;
     const int ERR_EXISTS  = file_already_exists;
     const int ERR_UNKNOWN = allocation_error;
 
@@ -104,7 +106,7 @@ int Test::runTouchTests(AbstractFileSystem* fs, TouchCommand* touch)
 //  Helper: automated tests for Rename (rn) MacroCommand
 int Test::runRenameTests(AbstractFileSystem* fs, TouchCommand* touch, AbstractCommand* rn)   // rn is the MacroCommand*
 {
-    int failures = 0;
+    int failures = NULL_DEFINITION;
     const int OK = success;
 
     // 1. rename a .txt file

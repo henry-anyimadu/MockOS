@@ -3,11 +3,12 @@
  */
 #pragma once
 #include <string>
+#include "mockos/Constants.h"
 
 class AbstractCommand {
     public:
     AbstractCommand();
     virtual ~AbstractCommand() = default;
-    virtual int execute(std::string info) = 0; // Holds info that is passed to the command
-    virtual void displayInfo() = 0; // Usage message for the command
+    virtual int execute(std::string info) = NULL_DEFINITION; // Holds info that is passed to the command
+    virtual void displayInfo() = NULL_DEFINITION; // Usage message for the command
 };

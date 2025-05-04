@@ -1,5 +1,6 @@
 /*
  * Studio 21: TouchCommand Header File
+ * For the touch command for creating files
  */
 #ifndef MOCKOS_TOUCH_COMMAND_H
 #define MOCKOS_TOUCH_COMMAND_H

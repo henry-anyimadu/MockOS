@@ -1,15 +1,18 @@
 /*
  * Studios 16-21 ImageFile.cpp
+ * Allows for the creation of basic file type: image
+ *
  */
 
 #include "mockos/ImageFile.h"
+#include "mockos/Constants.h"
 #include <iostream>
 #include <vector>
 #include <string>
 #include <cmath> // For sqrt
 
 // Constructor: Initializes name and size (dimension) to 0.
-ImageFile::ImageFile(std::string filename) : name(filename), size(0) {
+ImageFile::ImageFile(std::string filename) : name(filename), size(NULL_DEFINITION) {
     // Initialize contents vector if needed, though it starts empty by default.
 }
 
@@ -29,7 +32,7 @@ std::string ImageFile::getName() {
 
 // Writes data to the image file
 int ImageFile::write(std::vector<char> input) {
-    unsigned int empty = 0;
+    unsigned int empty = NULL_DEFINITION;
     if (input.empty()) {
         // Handle empty input if necessary, maybe return an error or do nothing
         contents.clear();
@@ -61,7 +64,7 @@ int ImageFile::write(std::vector<char> input) {
     }
 
     // Validate pixel data (first n*n characters)
-    for (unsigned int i = 0; i < expectedSize - 1; ++i) {
+    for (unsigned int i = NULL_DEFINITION; i < expectedSize - 1; ++i) {
         if (input[i] != 'X' && input[i] != ' ') {
             // Invalid pixel error
             contents.clear(); // Clear existing contents

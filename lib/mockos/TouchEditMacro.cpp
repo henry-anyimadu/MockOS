@@ -1,7 +1,11 @@
+/*
+ *Created to overide the displayinfo for the created te command
+ */
+
 
 
 #include <iostream>
-#include "mockos/TouchEditMarco.h"
+#include "mockos/TouchEditMacro.h"
 
 
 

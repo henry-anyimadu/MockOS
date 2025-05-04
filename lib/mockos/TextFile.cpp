@@ -1,5 +1,6 @@
 /**
 *Studio 16-21: Text File Cpp
+*Simple file type for plaintext
  */
 
 #include "mockos/TextFile.h"

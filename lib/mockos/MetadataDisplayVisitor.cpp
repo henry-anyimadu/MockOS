@@ -1,3 +1,9 @@
+/*
+ *Implementation for the Display Visitor for metadata, derived from the interface for visitor types
+ *Methods for text files and image files
+ */
+
+
 #include "mockos/MetadataDisplayVisitor.h"
 #include "mockos/TextFile.h"
 #include "mockos/ImageFile.h"

@@ -1,3 +1,10 @@
+/*
+ * Derived from the AbstractParsingStrategy
+ * Implementation for the parsing strategy for rn
+ * cp + rm
+ */
+
+
 #pragma once
 #include "mockos/AbstractParsingStrategy.h"
 #include <vector>

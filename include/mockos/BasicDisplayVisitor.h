@@ -1,3 +1,8 @@
+/*
+ *Lab 5: Basic Display Visitor
+ *Derives from AbstractFileVisitor for Basic Data types
+ */
+
 #pragma once
 #include "AbstractFileVisitor.h"
 

@@ -1,5 +1,7 @@
 /*
-* CopyCommand.cpp
+* CopyCommand.cpp implementation
+* Implements the copy command, which allows the contents of a file to be copied into another
+* Commands: displayInfo(), execute()
  */
 
 #include "mockos/CopyCommand.h"
