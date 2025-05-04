@@ -1,19 +1,16 @@
-# MockOS
-Repository for submitting lab work
-
-Note: We will read this file as raw text rather than markdown.
+# Mock Operating System in the Command Line - Built with C++
 
 Names: Jonah Sachs, Henry Anyimadu, Kelenna Eke-Okoro
 
-Lab #: 5
+Lab #5 for CSE 332: Intro to Object-Oriented Programming in C++
 
 Division of work:
 - For the studios we worked collaboratively, scheduling meetings in person and divvying up work asynchronously.
 - For the lab we split work based on availability. With final exams and projects, we focused on _when_ team members could
 work, instead of what they could work on.
 - We all collaborated on studio 16 in person. We then worked async, with Jonah taking on the next 2 studios, and Henry
-finishing the studio portion of the lab.
-- For Lab 5, all of us worked together to find and squash bugs as we found them while creating our MockOS commands
+finishing the studio portion of the lab from there.
+- For Lab 5, all of us worked together to find and squash bugs as we found them while creating our MockOS commands.
 
 ## Commands Implemented
 1. **LSCommand** (`ls`)
@@ -72,7 +69,6 @@ finishing the studio portion of the lab.
 - Every operation has error codes + error messages
 
 ## Testing
-
 - Unit tests for all command functionalities
 - Edge case testing (empty files, invalid extensions, etc.)
 - Macro command integration testing
@@ -80,13 +76,11 @@ finishing the studio portion of the lab.
 - Memory management verification
 
 ### Copy
-
 - Copying Text file
 - Copying Image file
 - Copying password-protected file
 
 ### Touch
-
 - Creating a Text file
 - Creating an Image file
 - Attempting to create a duplicate file
@@ -98,12 +92,40 @@ finishing the studio portion of the lab.
 - Renaming an image file
 - Renaming to an existing file
 
-### LS
-
+### List
 - Test 2 column (base case) LS
 - Test metadata (-m) output
-- Test an invalid 
+- Test an invalid flag
 
+### Remove
+- Remove a text file
+- Remove an img file
+- Attempt to remove a file that doesn't exist
 
+### Display
+- Display a text file
+- Test properly/improperly formatted command
+- Display an image file
+
+## Notable Errors (all fixed)
+When we began lab 5, we ran into multiple errors regarding methods created in the studios, mainly surrounding
+password protection, the touch command, and the command line.
+
+### Password Protection
+- Error: Password-protected files were being manipulated without asking for the password
+- We were able to alter the implementation of both PasswordProxy and TouchCommand to require password protection.
+- TouchCommand was creating 2 files, one password protected and one not, resulting in security issues as well as double deletion.
+
+### Touch Command
+- Error: Touch command wasn't recognizing when an input ended in "-p"
+- Researched potential fixes and found parser functionality in istringstream
+- Went from iterating through the string manually, to using parser for the "-p" flag
+- Was then able to use this newfound knowledge in implementing the rest of our commands
+
+### Command Prompt
+- Errors: Kept getting "Command Failed to Execute" whenever any other command was run
+- We used a command that printed out the exact error type we were getting from the command line.
+We were then able to use this to discern what our errors were with the command line.
+- Error lied in our input buffer handling, used 'getline' instead of cin to solve.
 
 
