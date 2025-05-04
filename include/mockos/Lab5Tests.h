@@ -14,6 +14,9 @@
 #include "AbstractFileSystem.h"
 #include "TouchCommand.h"
 #include "CopyCommand.h"
+#include "DisplayCommand.h"
+#include "LSCommand.h"
+#include "RemoveCommand.h"
 
 class Test {
 public:
@@ -25,6 +28,19 @@ public:
     static int runRenameTests(AbstractFileSystem* fs,
                    TouchCommand*       touch,
                    AbstractCommand*    rn);
+    static int runLSTests(AbstractFileSystem* fs,
+                      TouchCommand* touch,
+                      LSCommand* ls);
+
+    static int runRemoveTests(AbstractFileSystem* fs,
+                              TouchCommand* touch,
+                              RemoveCommand* rm);
+
+    static int runDisplayTests(AbstractFileSystem* fs,
+                               TouchCommand* touch,
+                               DisplayCommand* ds);
+
+    static int runMacroTests();
 };
 
 #endif //LAB5TESTS_H
