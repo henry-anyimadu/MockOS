@@ -25,7 +25,12 @@ enum ErrorTypes {
     cat_pointer_error,
     cat_ejection_error,
     dp_file_error,
-    dp_ext_error
+    dp_ext_error,
+    cp_token_error,
+    cp_ext_error,
+    cp_repeat_file,
+    cp_pointer_error,
+    cp_clone_error,
 };
 
 class AbstractFileVisitor; // Forward declaration needed
@@ -40,4 +45,5 @@ public:
     virtual unsigned int getSize() = 0;
     virtual std::string getName() = 0;
     virtual void accept(AbstractFileVisitor* visitor) = 0; // Added for Visitor pattern
+    virtual AbstractFile* clone(std::string newName) const = 0;
 };

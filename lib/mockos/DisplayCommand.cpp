@@ -4,6 +4,7 @@
 
 #include "mockos/DisplayCommand.h"
 #include "mockos/BasicDisplayVisitor.h"   // visitor supplied by the framework
+#include "mockos/ImageFile.h"   // add this include
 #include <iostream>
 #include <sstream>
 #include <sys/stat.h>

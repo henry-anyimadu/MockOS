@@ -64,3 +64,13 @@ void PasswordProxy::accept(AbstractFileVisitor *visitor) {
 }
 
 
+
+AbstractFile* PasswordProxy::clone(std::string newName) const {
+    // 1) delegate cloning of the actual data
+    AbstractFile* clonedInner = protectedFile->clone(newName);
+    if (clonedInner == nullptr) return nullptr;
+
+    // 2) wrap the clone in a new proxy that uses the same password
+    return new (std::nothrow) PasswordProxy(clonedInner, password);
+}
+

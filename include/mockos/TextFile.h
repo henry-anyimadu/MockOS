@@ -15,6 +15,7 @@ public:
     int write(std::vector<char> in) override;
     void accept(AbstractFileVisitor* visitor) override;
     ~TextFile() override;
+    AbstractFile* clone(std::string newName) const override;
 private:
     std::string name;
     std::vector<char> contents;

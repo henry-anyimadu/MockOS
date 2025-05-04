@@ -61,6 +61,12 @@ void TextFile::accept(AbstractFileVisitor *visitor) {
 
 TextFile::~TextFile() = default;
 
+AbstractFile* TextFile::clone(std::string newName) const {
+    TextFile* copy = new TextFile(newName);
+    copy->write(contents);          // deep‑copy the bytes
+    return copy;
+}
+
 
 
 

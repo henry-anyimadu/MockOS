@@ -40,4 +40,8 @@ public:
 
     // Helper method to get the dimension (optional, could be useful)
     // unsigned int getDimension() const { return size; }
+
+    //Helper method to clone for cp
+    AbstractFile* clone(std::string newName) const override;
+
 };

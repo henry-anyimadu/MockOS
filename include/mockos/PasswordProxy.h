@@ -25,5 +25,5 @@ public: // Constructors
     unsigned int getSize() override;
     std::string getName() override;
     void accept(AbstractFileVisitor* visitor) override;
-
+    AbstractFile* clone(std::string newName) const override;
 };

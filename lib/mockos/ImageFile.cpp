@@ -99,3 +99,24 @@ void ImageFile::accept(AbstractFileVisitor *visitor) {
     visitor->visit_ImageFile(this);
 }
 
+
+// ImageFile.cpp
+#include <cmath>        // std::sqrt
+
+AbstractFile* ImageFile::clone(std::string newName) const {
+    // 1) allocate a fresh ImageFile
+    auto* copy = new (std::nothrow) ImageFile(newName);
+    if (!copy) return nullptr;
+
+    // 2) rebuild the on‑disk format: pixels + dimension digit
+    std::vector<char> buffer = contents;            // deep‑copy pixels
+    unsigned int dim = static_cast<unsigned int>(std::sqrt(contents.size()));
+    buffer.push_back(static_cast<char>('0' + dim)); // '2', '3', …
+
+    // 3) write into the clone; abort if it fails
+    if (copy->write(buffer) != success) {
+        delete copy;
+        return nullptr;
+    }
+    return copy;
+}
