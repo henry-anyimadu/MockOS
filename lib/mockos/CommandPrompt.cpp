@@ -20,12 +20,12 @@
 
 using namespace std;
 
-enum exitValues {
-    SUCCESS = 0,
-    MISC_FAIL = 1,
-    MAP_ERROR = 2,
-    QUIT = 420,
-};
+// enum exitValues {
+//     SUCCESS = 0,
+//     MISC_FAIL = 1,
+//     MAP_ERROR = 2,
+//     QUIT = 420,
+// };
 
 CommandPrompt::CommandPrompt() : objPointer(nullptr), objFactory(nullptr) {}     // Initialize members to nullptr
 
@@ -42,12 +42,12 @@ void CommandPrompt::setFileFactory(AbstractFileFactory* file_factory) {
 int CommandPrompt::addCommand(string params, AbstractCommand* cmd) {
     auto mapAns = cmdObjects.insert(make_pair(params, cmd));
     if (!mapAns.second) {
-        return MAP_ERROR;
-    } else return SUCCESS;
+        return cmd_map_error;
+    } else return success;
 }
 
 void CommandPrompt::listCommands() { // Prints the name of all the commands
-    for (auto it = cmdObjects.begin(); it != cmdObjects.end(); it++) {
+    for (auto it = cmdObjects.begin(); it != cmdObjects.end(); ++it) {
         cout << it->first << endl;
     }
 }
@@ -67,7 +67,7 @@ int CommandPrompt::run() {
 
         // Check if the input is "q", if it is quit and return an appropriate non-zero value
         if (input == "q") {
-            return QUIT;
+            return cmd_quit_signifier;
         }
 
         // If the input is "help", call the listCommands method
@@ -88,8 +88,8 @@ int CommandPrompt::run() {
                 // If command is found, invoke execute with empty string
                 int result = cmdIter->second->execute("");
 
-                if (result != SUCCESS) {
-                    cout << "Command failed to execute." << endl;
+                if (result != success) {
+                    cout << "Command failed to execute. Result: " << result << endl;
                 }
             } else {
                 cout << "Command not found: " << input << endl;
@@ -120,7 +120,7 @@ int CommandPrompt::run() {
                     int result = cmdIter->second->execute(args);
 
                     if (result != success) {
-                        cout << "Command failed to execute."<< endl;
+                        cout << "Command failed to execute. Result: " << result << endl;
                     }
                 } else {
                     cout << "Command not found: " << firstWord << endl;
@@ -129,7 +129,7 @@ int CommandPrompt::run() {
         }
     }
 
-    return SUCCESS; // This line should never be reached
+    return success; // This line should never be reached
 }
 
 CommandPrompt::~CommandPrompt() {}

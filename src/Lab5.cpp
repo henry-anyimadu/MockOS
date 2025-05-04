@@ -24,10 +24,11 @@
 #include "mockos/TouchEditParsingStrategy.h"
 
 
-
-
-
-
+/**
+ *
+ * Main file for Lab5
+ *
+ */
 int main() {
     // Dynamically allocate a SimpleFileSystem, a SimpleFileFactory, and a TouchCommand
     AbstractFileSystem* fileSystem = new SimpleFileSystem();
@@ -101,10 +102,6 @@ int main() {
     //adds cp to cmd
     cp->addCommand("cp",cpcommand);
 
-
-
-
-
     if (int fails = Test::runCopyTests(fileSystem, touchCommand, cpcommand))
         std::cout << "[CopyCommand tests] FAILED: " << fails << '\n';
     else
@@ -124,13 +121,12 @@ int main() {
 
 
     // Run the command prompt
-    cp->run();
-
+    int cp_r = cp->run();
 
     // Clean up
     delete cp;
     delete fileSystem;
     delete fileFactory;
 
-    return success;
+    return cp_r;
 }
