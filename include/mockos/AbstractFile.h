@@ -31,6 +31,8 @@ enum ErrorTypes {
     cp_repeat_file,
     cp_pointer_error,
     cp_clone_error,
+    mc_no_strat,
+    mc_parse_size,
 };
 
 class AbstractFileVisitor; // Forward declaration needed

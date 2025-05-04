@@ -31,11 +31,14 @@ int CopyCommand::execute(std::string args) {
     std::string destName = n_name + ext;
 
     //check to see that the destination does not already exit
-    if (fileSystem->openFile(destName) != nullptr) {
-        fileSystem->closeFile(fileSystem->openFile(destName));
-        std::cerr << "cp: \"" << destName << "\" already exists \n";
-        return cp_repeat_file;
+    // CopyCommand.cpp  (inside execute)
+    AbstractFile* existing = fileSystem->openFile(destName);
+    if (existing != nullptr) {
+        fileSystem->closeFile(existing);           // close exactly what you opened
+        std::cerr << "cp: \"" << destName << "\" already exists\n";
+        return cp_repeat_file;                     // or command_failed
     }
+
 
     AbstractFile* o_ptr = fileSystem->openFile(o_name);
     if (o_ptr == nullptr) {

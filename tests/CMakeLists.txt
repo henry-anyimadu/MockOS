@@ -19,23 +19,51 @@ set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
 
 # Now link against gtest or gtest_main.
-add_executable(teststudio16 Studio16.cpp)
+add_executable(teststudio16 Studio16.cpp
+        ../include/mockos/RenameMacro.h
+        ../lib/mockos/RenameMacro.cpp
+        ../lib/mockos/Lab5Tests.cpp
+        ../lib/mockos/Lab5Tests.h)
 target_link_libraries(teststudio16 mockos gtest_main)
 
-add_executable(teststudio17 Studio17.cpp)
+add_executable(teststudio17 Studio17.cpp
+        ../include/mockos/RenameMacro.h
+        ../lib/mockos/RenameMacro.cpp
+        ../lib/mockos/Lab5Tests.cpp
+        ../lib/mockos/Lab5Tests.h)
 target_link_libraries(teststudio17 mockos gtest_main)
 
-add_executable(teststudio18 Studio18.cpp)
+add_executable(teststudio18 Studio18.cpp
+        ../include/mockos/RenameMacro.h
+        ../lib/mockos/RenameMacro.cpp
+        ../lib/mockos/Lab5Tests.cpp
+        ../lib/mockos/Lab5Tests.h)
 target_link_libraries(teststudio18 mockos gtest_main)
 
-add_executable(teststudio19 Studio19.cpp)
+add_executable(teststudio19 Studio19.cpp
+        ../include/mockos/RenameMacro.h
+        ../lib/mockos/RenameMacro.cpp
+        ../lib/mockos/Lab5Tests.cpp
+        ../lib/mockos/Lab5Tests.h)
 target_link_libraries(teststudio19 mockos gtest_main)
 
-add_executable(teststudio20 Studio20.cpp)
+add_executable(teststudio20 Studio20.cpp
+        ../include/mockos/RenameMacro.h
+        ../lib/mockos/RenameMacro.cpp
+        ../lib/mockos/Lab5Tests.cpp
+        ../lib/mockos/Lab5Tests.h)
 target_link_libraries(teststudio20 mockos gtest_main)
 
-add_executable(teststudio21 Studio21.cpp CommandTest.cpp CommandTest.h)
+add_executable(teststudio21 Studio21.cpp CommandTest.cpp CommandTest.h
+        ../include/mockos/RenameMacro.h
+        ../lib/mockos/RenameMacro.cpp
+        ../lib/mockos/Lab5Tests.cpp
+        ../lib/mockos/Lab5Tests.h)
 target_link_libraries(teststudio21 mockos gtest_main)
 
-add_executable(testlab5 Lab5.cpp CommandTest.cpp CommandTest.h)
+add_executable(testlab5 Lab5.cpp CommandTest.cpp CommandTest.h
+        ../include/mockos/RenameMacro.h
+        ../lib/mockos/RenameMacro.cpp
+        ../lib/mockos/Lab5Tests.cpp
+        ../lib/mockos/Lab5Tests.h)
 target_link_libraries(testlab5 mockos gtest_main)

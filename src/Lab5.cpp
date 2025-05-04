@@ -16,103 +16,11 @@
 #include "mockos/RemoveCommand.h"
 #include "mockos/TextFile.h"
 #include "mockos/PasswordProxy.h"
+#include "mockos/MacroCommand.h"
+#include "mockos/RenameParsingStrategy.h"
+#include "mockos/RenameMacro.h"
+#include "mockos/Lab5Tests.h"
 
-
-
-int runCopyTests(AbstractFileSystem* fs,
-                 TouchCommand* touch,
-                 CopyCommand*  cp)
-{
-    int failures = 0;
-    const int OK = 0;
-
-    //---------------- 1. text file ----------------
-    assert(touch->execute("orig.txt") == OK);
-    if (auto* f = fs->openFile("orig.txt")) {
-        f->write({'H','e','l','l','o','\n'});
-        fs->closeFile(f);
-    }
-
-    assert(cp->execute("orig.txt orig_copy") == OK);
-
-    auto* orig = fs->openFile("orig.txt");
-    auto* copy = fs->openFile("orig_copy.txt");
-    if (!orig || !copy) ++failures;
-    else {
-        if (orig->read() != copy->read()) ++failures;
-        copy->append({'B','y','e','\n'});
-        if (orig->read() == copy->read()) ++failures;
-    }
-    if (orig) fs->closeFile(orig);
-    if (copy) fs->closeFile(copy);
-
-    //---------------- 2. image file ---------------
-    assert(touch->execute("pict.img") == OK);
-    if (auto* f = fs->openFile("pict.img")) {
-        f->write({'X','X','X','X','2'});     // 2×2
-        fs->closeFile(f);
-    }
-
-    assert(cp->execute("pict.img pict_copy") == OK);
-
-    auto* pict     = fs->openFile("pict.img");
-    auto* pictCopy = fs->openFile("pict_copy.img");
-    if (!pict || !pictCopy || pict->read() != pictCopy->read()) ++failures;
-    if (pict)     fs->closeFile(pict);
-    if (pictCopy) fs->closeFile(pictCopy);
-
-    //---------------- 3. password‑protected -------
-    {
-        auto* raw = new TextFile("secret.txt");
-        raw->write({'1','2','3'});
-        auto* prox = new PasswordProxy(raw, "pw");
-        fs->addFile("secret.txt", prox);
-
-        if (cp->execute("secret.txt secret_copy") != OK) ++failures;
-
-        auto* scopy = fs->openFile("secret_copy.txt");
-        if (!scopy) ++failures;
-        else        fs->closeFile(scopy);
-
-        auto* sorig = fs->openFile("secret.txt");
-        if (sorig)  fs->closeFile(sorig);
-    }
-
-    return failures;
-}
-
-
-//--------------------------------------------------------------
-//  Helper: automated tests for TouchCommand
-//--------------------------------------------------------------
-int runTouchTests(AbstractFileSystem* fs,
-                  TouchCommand*      touch)
-{
-    int failures = 0;
-    const int OK          = 0;
-    const int ERR_EXISTS  = file_already_exists;
-    const int ERR_UNKNOWN = allocation_error;
-
-    // 1. create .txt
-    if (touch->execute("alpha.txt") != OK) ++failures;
-    if (auto* f = fs->openFile("alpha.txt")) {
-        fs->closeFile(f);
-    } else ++failures;
-
-    // 2. duplicate name
-    if (touch->execute("alpha.txt") != ERR_EXISTS) ++failures;
-
-    // 3. create .img
-    if (touch->execute("beta.img") != OK) ++failures;
-    if (auto* f = fs->openFile("beta.img")) {
-        fs->closeFile(f);
-    } else ++failures;
-
-    // 4. bad extension
-    if (touch->execute("gamma.xyz") != ERR_UNKNOWN) ++failures;
-
-    return failures;
-}
 
 
 
@@ -147,6 +55,17 @@ int main() {
     // Create a CommandPrompt and configure it
     CommandPrompt* cp = new CommandPrompt(fileSystem, fileFactory);
 
+    //create rename
+    auto* renameCmd = new RenameMacro();
+    renameCmd->addCommand(cpcommand);
+    renameCmd->addCommand(removeCommand);
+    RenameParsingStrategy* rnParse = new RenameParsingStrategy();
+    renameCmd->setParseStrategy(rnParse);
+
+
+    //Add the rn command through the MacroCommands interface
+    cp->addCommand("rn", renameCmd);
+
     // Add the touch command to the command prompt
     cp->addCommand("touch", touchCommand);
 
@@ -169,16 +88,22 @@ int main() {
 
 
 
-    if (int fails = runCopyTests(fileSystem, touchCommand, cpcommand))
+    if (int fails = Test::runCopyTests(fileSystem, touchCommand, cpcommand))
         std::cout << "[CopyCommand tests] FAILED: " << fails << '\n';
     else
         std::cout << "[CopyCommand tests] all passed\n";
 
 
-    if (int fails = runTouchTests(fileSystem, touchCommand))
+    if (int fails = Test::runTouchTests(fileSystem, touchCommand))
         std::cout << "[TouchCommand tests] FAILED: " << fails << '\n';
     else
         std::cout << "[TouchCommand tests] all passed\n";
+
+
+    if (int fails = Test::runRenameTests(fileSystem, touchCommand, renameCmd))
+        std::cout << "[RenameCommand tests] FAILED: " << fails << '\n';
+    else
+        std::cout << "[RenameCommand tests] all passed\n";
 
 
     // Run the command prompt
