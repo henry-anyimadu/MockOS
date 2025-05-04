@@ -12,14 +12,12 @@
 #include "mockos/PasswordProxy.h"
 
 
-int Test::runCopyTests(AbstractFileSystem* fs,
-                 TouchCommand* touch,
-                 CopyCommand*  cp)
+int Test::runCopyTests(AbstractFileSystem* fs, TouchCommand* touch, CopyCommand* cp)
 {
     int failures = 0;
     const int OK = 0;
 
-    //---------------- 1. text file ----------------
+    // 1. text file
     assert(touch->execute("orig.txt") == OK);
     if (auto* f = fs->openFile("orig.txt")) {
         f->write({'H','e','l','l','o','\n'});
@@ -39,22 +37,22 @@ int Test::runCopyTests(AbstractFileSystem* fs,
     if (orig) fs->closeFile(orig);
     if (copy) fs->closeFile(copy);
 
-    //---------------- 2. image file ---------------
+    // 2. image file
     assert(touch->execute("pict.img") == OK);
     if (auto* f = fs->openFile("pict.img")) {
-        f->write({'X','X','X','X','2'});     // 2×2
+        f->write({'X','X','X','X','2'}); // 2×2
         fs->closeFile(f);
     }
 
     assert(cp->execute("pict.img pict_copy") == OK);
 
-    auto* pict     = fs->openFile("pict.img");
+    auto* pict = fs->openFile("pict.img");
     auto* pictCopy = fs->openFile("pict_copy.img");
     if (!pict || !pictCopy || pict->read() != pictCopy->read()) ++failures;
-    if (pict)     fs->closeFile(pict);
+    if (pict) fs->closeFile(pict);
     if (pictCopy) fs->closeFile(pictCopy);
 
-    //---------------- 3. password‑protected -------
+    // 3. password‑protected
     {
         auto* raw = new TextFile("secret.txt");
         raw->write({'1','2','3'});
@@ -65,24 +63,20 @@ int Test::runCopyTests(AbstractFileSystem* fs,
 
         auto* scopy = fs->openFile("secret_copy.txt");
         if (!scopy) ++failures;
-        else        fs->closeFile(scopy);
+        else fs->closeFile(scopy);
 
         auto* sorig = fs->openFile("secret.txt");
-        if (sorig)  fs->closeFile(sorig);
+        if (sorig) fs->closeFile(sorig);
     }
 
     return failures;
 }
 
-
-//--------------------------------------------------------------
 //  Helper: automated tests for TouchCommand
-//--------------------------------------------------------------
-int Test::runTouchTests(AbstractFileSystem* fs,
-                  TouchCommand*      touch)
+int Test::runTouchTests(AbstractFileSystem* fs, TouchCommand* touch)
 {
     int failures = 0;
-    const int OK          = 0;
+    const int OK = 0;
     const int ERR_EXISTS  = file_already_exists;
     const int ERR_UNKNOWN = allocation_error;
 
@@ -107,18 +101,13 @@ int Test::runTouchTests(AbstractFileSystem* fs,
     return failures;
 }
 
-
-//--------------------------------------------------------------
 //  Helper: automated tests for Rename (rn) MacroCommand
-//--------------------------------------------------------------
-int Test::runRenameTests(AbstractFileSystem* fs,
-                   TouchCommand*       touch,
-                   AbstractCommand*    rn)   // rn is the MacroCommand*
+int Test::runRenameTests(AbstractFileSystem* fs, TouchCommand* touch, AbstractCommand* rn)   // rn is the MacroCommand*
 {
     int failures = 0;
-    const int OK = success;          // 0 in your enum
+    const int OK = success;
 
-    //---------------- 1. rename a .txt file -----------------
+    // 1. rename a .txt file
     touch->execute("old.txt");
     if (auto* f = fs->openFile("old.txt")) {
         f->write({'A','B','\n'});
@@ -134,7 +123,7 @@ int Test::runRenameTests(AbstractFileSystem* fs,
         fs->closeFile(newTxt);
     } else ++failures;
 
-    //---------------- 2. rename an .img file ----------------
+    // 2. rename an .img file
     touch->execute("pic.img");
     if (auto* f = fs->openFile("pic.img")) {
         f->write({'X','X','X','X','2'});
@@ -150,18 +139,17 @@ int Test::runRenameTests(AbstractFileSystem* fs,
         fs->closeFile(icon);
     } else ++failures;
 
-    //---------------- 3. error path: dest already exists ----
+    // 3. error path: dest already exists
     touch->execute("foo.txt");
-    touch->execute("bar.txt");            // pre‑existing destination for erroring tests
+    touch->execute("bar.txt"); // pre‑existing destination for erroring tests
 
-    // ---- silence stderr for this call only ----
+    // silence stderr for this call only
     std::streambuf* oldBuf = std::cerr.rdbuf();
     std::ostringstream sink;
     std::cerr.rdbuf(sink.rdbuf());
 
-
     int rc = rn->execute("foo.txt bar");
-    if (rc == OK) ++failures;             // should NOT succeed
+    if (rc == OK) ++failures; // should NOT succeed
 
     // originals must still be present
     // originals must still be present
@@ -175,6 +163,3 @@ int Test::runRenameTests(AbstractFileSystem* fs,
 
     return failures;
 }
-
-
-
