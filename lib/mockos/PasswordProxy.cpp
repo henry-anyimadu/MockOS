@@ -15,14 +15,16 @@ PasswordProxy::~PasswordProxy() {
     delete protectedFile;
 }
 
-string PasswordProxy::passwordPrompt() {
-    string input;
-    cout << "Enter Password: ";
-    // Clear leftover space currently in the input buffer
-    cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-    getline(cin, input);
+// PasswordProxy.cpp
+std::string PasswordProxy::passwordPrompt() {
+    std::string input;
+    std::cout << "Enter Password: ";
+    // remove this – it flushed the password the tests just sent
+    // std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    std::getline(std::cin, input);
     return input;
 }
+
 
 vector<char> PasswordProxy::read() {
     string pw = passwordPrompt();

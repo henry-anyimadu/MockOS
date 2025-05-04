@@ -45,12 +45,12 @@ int DisplayCommand::execute(std::string args) {
     if (dataOnly) {
         //unformatted dump
         for (char c: fp->read()) std::cout << c;
-        //Adding in the dimension for proper formatting
-        if (filename.size() >= MIN_IMG_SIZE && filename.compare(filename.size()-MIN_IMG_SIZE,MIN_IMG_SIZE, ".img")==0) {
-            unsigned int n = fp->getSize();
-            unsigned int dim = static_cast<unsigned int>(std::sqrt(n));
-            std::cout << dim;
-        }
+        // //Adding in the dimension for proper formatting
+        // if (filename.size() >= MIN_IMG_SIZE && filename.compare(filename.size()-MIN_IMG_SIZE,MIN_IMG_SIZE, ".img")==0) {
+        //     unsigned int n = fp->getSize();
+        //     unsigned int dim = static_cast<unsigned int>(std::sqrt(n));
+        //     std::cout << dim;
+        // }
 
         std::cout <<'\n';
     } else {
