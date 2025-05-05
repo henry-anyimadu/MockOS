@@ -6,6 +6,7 @@
 
 #include "AbstractFile.h"
 #include "AbstractFileVisitor.h"
+#include <string>
 
 class TextFile: public AbstractFile {
 public:

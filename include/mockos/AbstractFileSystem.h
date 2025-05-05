@@ -8,8 +8,8 @@
 // Defines the contract for file system implementations (managing files: add, delete, open, close).
 #pragma once
 
-#include <filesystem>
 #include <set>
+#include <string>
 #include "AbstractFile.h"
 #include "mockos/Constants.h"
 

@@ -11,6 +11,7 @@
 #pragma once
 
 #include <vector>
+#include <string>
 #include "mockos/Constants.h"
 
 enum ErrorTypes {
