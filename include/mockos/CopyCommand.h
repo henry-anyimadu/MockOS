@@ -2,7 +2,10 @@
  * Header for the copy command implementation
  * Lab 5
  */
-
+ 
+// Author: Kelenna, Henry, Jonah
+// Declaration of the CopyCommand class. Implements AbstractCommand to
+// duplicate an existing file using the AbstractFile::clone method.
 #pragma once
 /*
  * CopyCommand

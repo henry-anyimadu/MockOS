@@ -5,6 +5,8 @@
  *   -a : append mode (show file, then append)
  *        no flag = overwrite mode (do not show file, replace contents)
  */
+// Declaration of the CatCommand class. Implements AbstractCommand to
+// display and optionally modify (overwrite/append) file contents via user input.
 
 #include "mockos/AbstractCommand.h"
 #include "mockos/AbstractFileSystem.h"
