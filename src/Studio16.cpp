@@ -6,6 +6,7 @@
 
 #include "mockos/AbstractFile.h"
 #include "mockos/TextFile.h"
+#include <memory>
 
 using namespace std;
 
