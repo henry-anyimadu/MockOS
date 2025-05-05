@@ -1,6 +1,11 @@
 /*
  * Studio 21: Abstract Command Header File
  */
+
+// Author: Kelenna, Henry, Jonah
+// Declaration of the AbstractCommand interface (Command pattern)
+// Defines the contract for command objects (`execute`, `displayInfo`)
+// Allows requests to be encapsulated as objects
 #pragma once
 #include <string>
 #include "mockos/Constants.h"

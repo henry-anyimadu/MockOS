@@ -1,6 +1,11 @@
 /**
 * Studios 16-21: AbstractFileFactory.h
  **/
+ 
+// Author: Kelenna, Henry, Jonah
+// Declaration of the AbstractFileFactory interface (Abstract Factory pattern)
+// Defines the contract for creating AbstractFile objects 
+// Decouples file creation from file system/client
 #pragma once
 
 #include "AbstractFile.h"

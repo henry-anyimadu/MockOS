@@ -2,6 +2,12 @@
  *Studio 16-21: Abstract Interface
  *AbstractFile.h for defining the Abstract File class
  */
+ // AbstractFile.h
+  // Author: Kelenna, Henry, Jonah
+  // Declaration of the AbstractFile interface. Defines common operations
+  // for file types (read, write, append, getSize, getName). 
+  // Includes support for Visitor (`accept`) and Prototype (`clone`) patterns. Defines error codes
+
 #pragma once
 
 #include <vector>

@@ -2,6 +2,10 @@
  * Studios 16-21: AbstractFilesystem.h
  * Interface for the file system
  */
+ 
+// Author: Kelenna, Henry, Jonah
+// Declaration of the AbstractFileSystem interface. 
+// Defines the contract for file system implementations (managing files: add, delete, open, close).
 #pragma once
 
 #include <filesystem>

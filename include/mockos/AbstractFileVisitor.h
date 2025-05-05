@@ -2,6 +2,11 @@
  *Lab 5: Abstract File Visitor Header
  *Allows you to visit both file types
  */
+// Author: Kelenna, Henry, Jonah
+// Declaration of the AbstractFileVisitor interface (Visitor pattern).
+// Defines the contract for visitors performing operations on concrete file types.
+// Requires visit methods for each concrete file type.
+
 
 
 #pragma once
