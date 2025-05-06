@@ -4,4 +4,4 @@ Part 2e: To prevent memory leaks, as the proxy takes ownership of the dynamicall
 
 Part 4: Created TextFile, wrapped in PasswordProxy ("secret"). Tested write: failed with wrong password, succeeded with correct password. Tested read: failed (empty vector/error) with wrong password, succeeded with correct password. Observed password prompts.
 
-Part 5: Document any unit tests for Studio 20 that failed initially and explain how you resolved them. If all passed, state that.
+Part 5: all passed
