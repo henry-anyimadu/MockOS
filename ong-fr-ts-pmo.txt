@@ -1,0 +1,224 @@
+**********************************************
+Studios 16-21:
+Grade: 97/100
+studio 16 did not use a ptr to an AbstractFile
+
+Late deduction (Due by 11:59 PM on 5/6, -10 if submitted on 5/7, -20 if submitted on 5/8), 0 if submitted anytime after 5/8: 
+
+Lab 5:
+Grade: 97/100
+LS: 15/15
+RM: 5/5
+Touch: 10/10
+Cat: 15/15
+DS: 10/10
+Copy: 15/15
+Used prototype pattern: y
+Macro + rename: 15/15
+Used composite pattern: y
+Additional MacroCommand: 5/5
+Main + readme: 7/10
+-3 memory leaks - many objects allocated dynamically and not deallocated, files remaining in file system not deallocated
+Extra credit: 0/5
+
+
+*********************************************
+﻿H:\cse332\base-scripts\scripts\Lab5Grading\StudentRepos\oop-work-ong-fr-ts-pmo
+library build successful
+test build successful
+Running main() from H:\cse332\base-scripts\scripts\Lab5Grading\StudentRepos\oop-work-ong-fr-ts-pmo\cmake-build\_deps\googletest-src\googletest\src\gtest_main.cc
+[==========] Running 71 tests from 16 test suites.
+[----------] Global test environment set-up.
+[----------] 5 tests from textFile
+[ RUN      ] textFile.constructor
+[       OK ] textFile.constructor (0 ms)
+[ RUN      ] textFile.write
+[       OK ] textFile.write (0 ms)
+[ RUN      ] textFile.append
+[       OK ] textFile.append (0 ms)
+[ RUN      ] textFile.read
+[       OK ] textFile.read (0 ms)
+[ RUN      ] textFile.readWithAppend
+[       OK ] textFile.readWithAppend (0 ms)
+[----------] 5 tests from textFile (0 ms total)
+
+[----------] 6 tests from imageFile
+[ RUN      ] imageFile.constructor
+[       OK ] imageFile.constructor (0 ms)
+[ RUN      ] imageFile.writeValid
+[       OK ] imageFile.writeValid (0 ms)
+[ RUN      ] imageFile.writeSizeMismatch
+[       OK ] imageFile.writeSizeMismatch (0 ms)
+[ RUN      ] imageFile.writeInvalidPixel
+[       OK ] imageFile.writeInvalidPixel (0 ms)
+[ RUN      ] imageFile.appendInvalid
+[       OK ] imageFile.appendInvalid (0 ms)
+[ RUN      ] imageFile.read
+[       OK ] imageFile.read (0 ms)
+[----------] 6 tests from imageFile (0 ms total)
+
+[----------] 11 tests from simpleFileSystem
+[ RUN      ] simpleFileSystem.addValid
+[       OK ] simpleFileSystem.addValid (0 ms)
+[ RUN      ] simpleFileSystem.addNullFile
+[       OK ] simpleFileSystem.addNullFile (0 ms)
+[ RUN      ] simpleFileSystem.addFileAlreadyExists
+[       OK ] simpleFileSystem.addFileAlreadyExists (0 ms)
+[ RUN      ] simpleFileSystem.deleteValid
+[       OK ] simpleFileSystem.deleteValid (0 ms)
+[ RUN      ] simpleFileSystem.deleteFileDoesNotExist
+[       OK ] simpleFileSystem.deleteFileDoesNotExist (0 ms)
+[ RUN      ] simpleFileSystem.openValid
+[       OK ] simpleFileSystem.openValid (0 ms)
+[ RUN      ] simpleFileSystem.openFileNotAdded
+[       OK ] simpleFileSystem.openFileNotAdded (0 ms)
+[ RUN      ] simpleFileSystem.openAlreadyOpenedFile
+[       OK ] simpleFileSystem.openAlreadyOpenedFile (0 ms)
+[ RUN      ] simpleFileSystem.closeValid
+[       OK ] simpleFileSystem.closeValid (0 ms)
+[ RUN      ] simpleFileSystem.closeNotOpen
+[       OK ] simpleFileSystem.closeNotOpen (0 ms)
+[ RUN      ] simpleFileSystem.closeNotAdded
+[       OK ] simpleFileSystem.closeNotAdded (0 ms)
+[----------] 11 tests from simpleFileSystem (0 ms total)
+
+[----------] 2 tests from simpleFileFactory
+[ RUN      ] simpleFileFactory.createFileValid
+[       OK ] simpleFileFactory.createFileValid (0 ms)
+[ RUN      ] simpleFileFactory.createUnknownExtension
+[       OK ] simpleFileFactory.createUnknownExtension (0 ms)
+[----------] 2 tests from simpleFileFactory (0 ms total)
+
+[----------] 2 tests from basicDisplayVisitor
+[ RUN      ] basicDisplayVisitor.visitTextFile
+[       OK ] basicDisplayVisitor.visitTextFile (0 ms)
+[ RUN      ] basicDisplayVisitor.visitImageFile
+[       OK ] basicDisplayVisitor.visitImageFile (0 ms)
+[----------] 2 tests from basicDisplayVisitor (0 ms total)
+
+[----------] 2 tests from metadataDisplayVisitor
+[ RUN      ] metadataDisplayVisitor.visitTextFile
+[       OK ] metadataDisplayVisitor.visitTextFile (0 ms)
+[ RUN      ] metadataDisplayVisitor.visitImageFile
+[       OK ] metadataDisplayVisitor.visitImageFile (0 ms)
+[----------] 2 tests from metadataDisplayVisitor (0 ms total)
+
+[----------] 9 tests from passwordProxy
+[ RUN      ] passwordProxy.constructor
+[       OK ] passwordProxy.constructor (0 ms)
+[ RUN      ] passwordProxy.writeValidPassword
+[       OK ] passwordProxy.writeValidPassword (0 ms)
+[ RUN      ] passwordProxy.writeInvalidPassword
+[       OK ] passwordProxy.writeInvalidPassword (0 ms)
+[ RUN      ] passwordProxy.appendValidPassword
+[       OK ] passwordProxy.appendValidPassword (0 ms)
+[ RUN      ] passwordProxy.appendInvalidPassword
+[       OK ] passwordProxy.appendInvalidPassword (0 ms)
+[ RUN      ] passwordProxy.readValidPassword
+[       OK ] passwordProxy.readValidPassword (0 ms)
+[ RUN      ] passwordProxy.readInvalidPassword
+[       OK ] passwordProxy.readInvalidPassword (0 ms)
+[ RUN      ] passwordProxy.acceptValidPassword
+[       OK ] passwordProxy.acceptValidPassword (0 ms)
+[ RUN      ] passwordProxy.acceptInvalidPassword
+[       OK ] passwordProxy.acceptInvalidPassword (0 ms)
+[----------] 9 tests from passwordProxy (0 ms total)
+
+[----------] 2 tests from commandPrompt
+[ RUN      ] commandPrompt.runQuit
+[       OK ] commandPrompt.runQuit (0 ms)
+[ RUN      ] commandPrompt.runHelp
+[       OK ] commandPrompt.runHelp (0 ms)
+[----------] 2 tests from commandPrompt (0 ms total)
+
+[----------] 2 tests from commandTest
+[ RUN      ] commandTest.commandDisplayInfo
+[       OK ] commandTest.commandDisplayInfo (0 ms)
+[ RUN      ] commandTest.commandExecuteNoInfo
+[       OK ] commandTest.commandExecuteNoInfo (0 ms)
+[----------] 2 tests from commandTest (0 ms total)
+
+[----------] 2 tests from touchCommand
+[ RUN      ] touchCommand.execute
+[       OK ] touchCommand.execute (0 ms)
+[ RUN      ] touchCommand.executePasswordProxy
+[       OK ] touchCommand.executePasswordProxy (0 ms)
+[----------] 2 tests from touchCommand (0 ms total)
+
+[----------] 2 tests from removeCommand
+[ RUN      ] removeCommand.execute
+[       OK ] removeCommand.execute (0 ms)
+[ RUN      ] removeCommand.executeFileOpen
+[       OK ] removeCommand.executeFileOpen (0 ms)
+[----------] 2 tests from removeCommand (0 ms total)
+
+[----------] 3 tests from lScommand
+[ RUN      ] lScommand.getAllFiles
+[       OK ] lScommand.getAllFiles (0 ms)
+[ RUN      ] lScommand.nooption
+[       OK ] lScommand.nooption (0 ms)
+[ RUN      ] lScommand.metadata
+[       OK ] lScommand.metadata (0 ms)
+[----------] 3 tests from lScommand (0 ms total)
+
+[----------] 10 tests from catCommand
+[ RUN      ] catCommand.executeTextFileNAppendSaving
+[       OK ] catCommand.executeTextFileNAppendSaving (0 ms)
+[ RUN      ] catCommand.executeTextFileNoAppendSavingMultipleLines
+[       OK ] catCommand.executeTextFileNoAppendSavingMultipleLines (0 ms)
+[ RUN      ] catCommand.executeTextFileNoAppendNoSaving
+[       OK ] catCommand.executeTextFileNoAppendNoSaving (0 ms)
+[ RUN      ] catCommand.executeTextFileAppendSaving
+[       OK ] catCommand.executeTextFileAppendSaving (0 ms)
+[ RUN      ] catCommand.executeTextFileAppendNoSaving
+[       OK ] catCommand.executeTextFileAppendNoSaving (0 ms)
+[ RUN      ] catCommand.executeImageFileNoAppendSavingGoodInput
+[       OK ] catCommand.executeImageFileNoAppendSavingGoodInput (0 ms)
+[ RUN      ] catCommand.executeImageFileNoAppendSavingBadInput
+[       OK ] catCommand.executeImageFileNoAppendSavingBadInput (0 ms)
+[ RUN      ] catCommand.executeImageFileNoAppendNoSavingGoodInput
+[       OK ] catCommand.executeImageFileNoAppendNoSavingGoodInput (0 ms)
+[ RUN      ] catCommand.executeImageFileAppendSavingGoodInput
+[       OK ] catCommand.executeImageFileAppendSavingGoodInput (0 ms)
+[ RUN      ] catCommand.executeFileDoesNotExist
+[       OK ] catCommand.executeFileDoesNotExist (0 ms)
+[----------] 10 tests from catCommand (1 ms total)
+
+[----------] 5 tests from renameCommand
+[ RUN      ] renameCommand.renameParsingStrategy
+[       OK ] renameCommand.renameParsingStrategy (0 ms)
+[ RUN      ] renameCommand.renameValid
+[       OK ] renameCommand.renameValid (0 ms)
+[ RUN      ] renameCommand.renameInvalidFilename
+[       OK ] renameCommand.renameInvalidFilename (0 ms)
+[ RUN      ] renameCommand.renameInvalidNewFilename
+[       OK ] renameCommand.renameInvalidNewFilename (0 ms)
+[ RUN      ] renameCommand.renameValidPasswordProtected
+[       OK ] renameCommand.renameValidPasswordProtected (0 ms)
+[----------] 5 tests from renameCommand (0 ms total)
+
+[----------] 5 tests from DSCommand
+[ RUN      ] DSCommand.displaytext
+[       OK ] DSCommand.displaytext (0 ms)
+[ RUN      ] DSCommand.displaytextunformatted
+[       OK ] DSCommand.displaytextunformatted (0 ms)
+[ RUN      ] DSCommand.displayimageformatted
+[       OK ] DSCommand.displayimageformatted (0 ms)
+[ RUN      ] DSCommand.displayimageunformatted
+[       OK ] DSCommand.displayimageunformatted (0 ms)
+[ RUN      ] DSCommand.displayinvalid
+[       OK ] DSCommand.displayinvalid (0 ms)
+[----------] 5 tests from DSCommand (0 ms total)
+
+[----------] 3 tests from copy
+[ RUN      ] copy.validcopy
+[       OK ] copy.validcopy (0 ms)
+[ RUN      ] copy.invalidcopy
+[       OK ] copy.invalidcopy (0 ms)
+[ RUN      ] copy.copypasswordprotected
+[       OK ] copy.copypasswordprotected (0 ms)
+[----------] 3 tests from copy (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 71 tests from 16 test suites ran. (9 ms total)
+[  PASSED  ] 71 tests.
