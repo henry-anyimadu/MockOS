@@ -1,97 +1,131 @@
-# Mock OS Studios/Lab
-Throughout these studios and the lab, you'll be creating a static library that
-implements a mock operating system.
-A user of this mock operating system will be able to
-create and interact with files using commands.
+# Mock Operating System in the Command Line - Built with C++
 
-At each stage, you'll try out your static library by writing and running executables,
-and you'll test it by running unit tests.
+Names: Jonah Sachs, Henry Anyimadu, Kelenna Eke-Okoro
 
-## Directory structure
-The directory structure aims to follow best practices,
-so it will look similar to many C++ projects in the real world.
+Lab #5 for CSE 332: Intro to Object-Oriented Programming in C++
 
-The idea is to separate the public interface from its implementation.
+Division of work:
+- For the studios we worked collaboratively, scheduling meetings in person and divvying up work asynchronously.
+- For the lab we split work based on availability. With final exams and projects, we focused on _when_ team members could
+work, instead of what they could work on.
+- We all collaborated on studio 16 in person. We then worked async, with Jonah taking on the next 2 studios, and Henry
+finishing the studio portion of the lab from there.
+- For Lab 5, all of us worked together to find and squash bugs as we found them while creating our MockOS commands.
 
-- [docs/](./docs)
-  - This directory contains the markdown files in which you'll answer
-    the studio questions and write your lab README.
+## Commands Implemented
+1. **LSCommand** (`ls`)
+    - Lists all files in the filesystem
+    - Default: Two-column format with filenames
+    - `-m` option: One file per line with metadata (name, type, size)
+    - Properly formats output with padding for alignment
 
-- [include/](./include)
-  - This directory contains the public header files for the static library.
-  - They are placed within the inner directory `mockos/`,
-    so when including them from source files, prefix the filename with `mockos/`.
-    For example, if you wanted to use TextFile, you would type
-    `#include "mockos/TextFile.h"`.
-  - The prefix is not necessary when
-    you're including a header file from another header file that's inside `include/mockos/`.
-- [lib/](./lib)
-  - This directory contains the source files for the implementation of the static library.
-  - Like `include/`, the files are placed within an inner `mockos/` directory.
-- [src/](./src)
-  - This directory contains the source files for the executable code.
-  - There's a source file for each studio and the lab.
-- [tests/](./tests)
-  - This directory contains the unit tests.
-  - Since the tests are already written for you, you will not need to modify the files in this directory.
+2. **RemoveCommand** (`rm`)
+    - Removes a specified file from the filesystem
+    - Fails if file doesn't exist or is currently open
+    - Returns appropriate error codes
 
-## Workflow
-The workflow for each studio is similar.
+3. **TouchCommand** (`touch`)
+    - Creates new files (text or image)
+    - `-p` option: Creates password-protected files using PasswordProxy
+    - Prompts for password when creating protected files
+    - Enhanced error handling for invalid extensions
 
-### Answering the studio's questions
-While you go through the studio, write your answers to the studio's questions in the associated Markdown file.
-As an example, for Studio 16, write your answers in `docs/studio16.md`.
+4. **CatCommand** (`cat`) ^_^
+    - Edits file contents with write/append modes
+    - Default: Overwrites file contents
+    - `-a` option: Appends to existing content
+    - Editor commands: `:wq` (save & quit), `:q` (quit without saving)
+    - Handles image and text files differently (no trailing newlines for images)
 
-### Implementing part of the static library
-First, you'll implement the part of the static library
-specified by the studio instructions.
+5. **DisplayCommand** (`ds`)
+    - Shows file contents
+    - Default: Uses appropriate visitor for formatted display
+    - `-d` option: Raw data output without formatting
+    - Works with both text and image files
 
-When implementing a class, fill in its header file in `include/mockos/`,
-and fill in its source file in `lib/mockos/`.
+6. **CopyCommand** (`cp`)
+    - Copies existing files using the prototype pattern
+    - Syntax: `cp <source> <destination_base_name>`
+    - Automatically adds correct extension to destination
+    - Preserves file type and content
+    - Handles password-protected file copying
 
-When you're writing the header file, you can include other header files in `include/mockos/` without the `mockos/` prefix.
-For example, when writing the header file for `TextFile` in `include/mockos/TextFile.h`, you'd include AbstractFile like this:
-```c++
-#include "AbstractFile"
-```
+7. **RenameMacro** (`rn`)
+    - Renames files by copying to new name and removing original
+    - Uses RenameParsingStrategy to process arguments
+    - Built from CopyCommand and RemoveCommand
+    - Handles error cases (source doesn't exist, destination exists)
 
-However, when you're writing the source file, you must add the `mockos/` prefix.
-For example, when writing the source file for `TextFile` in `lib/mockos/TextFile.cpp`, you'd include its own header file like this:
-```c++
-#include "mockos/TextFile.h"
-```
+8. **TouchEditMacro** (`te`)
+    - Creates a file and immediately opens it in cat editor
+    - Custom macro implementation chosen for efficiency
+    - Uses TouchEditParsingStrategy for argument parsing
+    - Combines TouchCommand and CatCommand functionality
 
-### Trying out the newly implemented methods
-To try out the newly implemented methods,
-you'll then write a main method in the studio's source file in `src/`.
+## Design Decisions
 
-We have created executable targets for each studio.
-Just write the main method in the studio's source file,
-and you can run the corresponding target.
+- All commands inherit from AbstractCommand
+- Commands execute on an AbstractFileSystem pointer
+- Every operation has error codes + error messages
 
-For example, when you're working on studio 16,
-you'd write a main method in `src/Studio16.cpp`.
-Then, you can run the `studio16` target.
+## Testing
+- Unit tests for all command functionalities
+- Edge case testing (empty files, invalid extensions, etc.)
+- Macro command integration testing
+- Password-protected file operations
+- Memory management verification
 
-In CLion, you can choose the target by
-opening the Run Configurations dropdown menu.
+### Copy
+- Copying Text file
+- Copying Image file
+- Copying password-protected file
 
-In VS, you can choose the target by
-switching to CMake Targets View.
+### Touch
+- Creating a Text file
+- Creating an Image file
+- Attempting to create a duplicate file
+- Creating a file with an unknown extension
+- Creating a file with password protection
 
-### Running the unit tests
-Finally, you'll run the unit tests to check that everything works as we expect.
+### Rename
+- Renaming a text file
+- Renaming an image file
+- Renaming to an existing file
 
-To run a studio's unit tests, run the Google Test target corresponding to that studio.
-For example, for studio 16, run the `teststudio16` target.
+### List
+- Test 2 column (base case) LS
+- Test metadata (-m) output
+- Test an invalid flag
 
-## Lab tips
-### Adding new files
-We've configured CMake to find the header and source files with globs.
-As a consequence, when you add new files, you'll need to reload the CMake project
-for them to be added to the static library.
+### Remove
+- Remove a text file
+- Remove an img file
+- Attempt to remove a file that doesn't exist
 
-In CLion, right-click the top-level CMakeLists.txt
-and choose "Reload CMake Project".
+### Display
+- Display a text file
+- Test properly/improperly formatted command
+- Display an image file
 
-In VS, choose File > Open > CMake and select the top-level CMakeLists.txt.
+## Notable Errors (all fixed)
+When we began lab 5, we ran into multiple errors regarding methods created in the studios, mainly surrounding
+password protection, the touch command, and the command line.
+
+### Password Protection
+- Error: Password-protected files were being manipulated without asking for the password
+- We were able to alter the implementation of both PasswordProxy and TouchCommand to require password protection.
+- TouchCommand was creating 2 files, one password protected and one not, resulting in security issues as well as double deletion.
+
+### Touch Command
+- Error: Touch command wasn't recognizing when an input ended in "-p"
+- Researched potential fixes and found parser functionality in istringstream
+- Went from iterating through the string manually, to using parser for the "-p" flag
+- Was then able to use this newfound knowledge in implementing the rest of our commands
+
+### Command Prompt
+- Errors: Kept getting "Command Failed to Execute" whenever any other command was run
+- We used a command that printed out the exact error type we were getting from the command line.
+We were then able to use this to discern what our errors were with the command line.
+- Error lied in our input buffer handling, used 'getline' instead of cin to solve.
+
+
