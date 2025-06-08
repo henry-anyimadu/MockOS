@@ -2,7 +2,7 @@
 
 Names: Jonah Sachs, Henry Anyimadu, Kelenna Eke-Okoro
 
-Lab #5 for CSE 332: Intro to Object-Oriented Programming in C++
+Final project for CSE 332: Intro to Object-Oriented Programming in C++
 
 Division of work:
 - For the studios we worked collaboratively, scheduling meetings in person and divvying up work asynchronously.
